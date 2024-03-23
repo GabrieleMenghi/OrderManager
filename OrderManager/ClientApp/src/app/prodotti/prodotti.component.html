@@ -1,0 +1,24 @@
+<header>
+    <div>
+        <label for="typeahead-basic">Cerca un prodotto:</label>
+        <input id="typeahead-basic" type="text" class="form-control"/>
+    </div>
+</header>
+<div class="row">
+    <table class="col-12">
+        <thead>
+            <th>Codice</th>
+            <th>Descrizione</th>
+            <th>Prezzo</th>
+        </thead>
+        <tbody>
+            <div *ngFor="let p of this.prodotti">
+                <tr>
+                    <td>{{p.codice}}</td>
+                    <td>{{p.descrizione}}</td>
+                    <td>{{p.prezzo}}</td>
+                </tr>
+            </div>
+        </tbody>
+    </table>
+</div>
