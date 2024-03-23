@@ -13,6 +13,8 @@ export class ProdottiComponent implements OnInit {
   constructor(private configService: ConfigService) {}
 
   ngOnInit(): void {
-    this.configService.getProdotti().subscribe(data => this.prodotti = data);
+    this.configService
+      .getProdotti()
+      .subscribe((data) => (this.prodotti = data));
   }
 }

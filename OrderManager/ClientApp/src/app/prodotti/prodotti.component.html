@@ -5,20 +5,22 @@
     </div>
 </header>
 <div class="row">
-    <table class="col-12">
-        <thead>
-            <th>Codice</th>
-            <th>Descrizione</th>
-            <th>Prezzo</th>
-        </thead>
-        <tbody>
-            <div *ngFor="let p of this.prodotti">
-                <tr>
-                    <td>{{p.codice}}</td>
-                    <td>{{p.descrizione}}</td>
-                    <td>{{p.prezzo}}</td>
-                </tr>
-            </div>
-        </tbody>
-    </table>
+    <div>
+        <table class="col-12 text-center">
+            <thead>
+                <th class="col-4">Codice</th>
+                <th class="col-4">Descrizione</th>
+                <th class="col-4">Prezzo</th>
+            </thead>
+            <tbody>
+                <div *ngFor="let p of this.prodotti">
+                    <tr>
+                        <td>{{p.codice}}</td>
+                        <td>{{p.descrizione}}</td>
+                        <td>{{p.prezzo}}</td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+    </div>
 </div>
