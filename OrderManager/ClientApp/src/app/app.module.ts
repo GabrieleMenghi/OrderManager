@@ -4,22 +4,31 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProdottiComponent } from './prodotti/prodotti.component';
+import { ProdottiComponent } from './components/prodotti/prodotti.component';
+import { MaterialModule } from './material-module';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProdottiComponent
+    ProdottiComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    MaterialModule,
+    SidebarComponent,
+    NgbModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })
