@@ -16,5 +16,7 @@ export class ProdottiComponent implements OnInit {
     this.configService
       .getProdotti()
       .subscribe((data) => (this.prodotti = data));
+
+      console.log(this.prodotti);
   }
 }

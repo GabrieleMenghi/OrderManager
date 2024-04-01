@@ -1,38 +1,38 @@
-<mat-toolbar class="mat-elevation-z8 bg-warning">
-  <button class="me-3" (click)="drawer.toggle()" mat-icon-button>
-    <mat-icon>menu</mat-icon>
+<mat-toolbar class="mat-elevation-z8" style=" background-image: linear-gradient(to right, #00C178, teal);">
+  <button class="me-3" style="border: 0px; background-color: transparent;" (click)="drawer.toggle()" mat-icon-button>
+    <mat-icon style="color: white;">menu</mat-icon>
   </button>
-  <h1 class="text-lg-left">OrderManager</h1>
+  <h1 class="text-lg-left" style="color:white; font-size: x-large;">OrderManager</h1>
 </mat-toolbar>
 
-<mat-drawer-container autosize>
-  <mat-drawer #drawer opened="true" mode="side" position="start">
-    <mat-nav-list>
-      <mat-list-item>
-        <button routerLink="" mat-button><mat-icon>home</mat-icon> Home</button>
+<mat-drawer-container autosize style="position: absolute;right: 0px;left: 0px;bottom: 0px;top: 65px;">
+  <mat-drawer #drawer opened="true" mode="side" position="start" style="display: flex; width: 200px;">
+    <mat-nav-list style="width: 100%; vertical-align: middle;">
+      <mat-list-item class="bottone-sidebar" routerLink="">
+        <button mat-button><mat-icon>home</mat-icon> Home</button>
       </mat-list-item>
-      <mat-list-item>
-        <button routerLink="slider" mat-button>
+      <mat-list-item class="bottone-sidebar">
+        <button mat-button>
           <mat-icon>explore</mat-icon> Slider
         </button>
       </mat-list-item>
-      <mat-list-item>
-        <button routerLink="table" mat-button>
+      <mat-list-item class="bottone-sidebar">
+        <button mat-button>
           <mat-icon>table</mat-icon> Table
         </button>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item class="bottone-sidebar">
         <button mat-button><mat-icon>settings</mat-icon> Settings</button>
       </mat-list-item>
-      <mat-list-item>
-        <button routerLink="prodotti" mat-button>
+      <mat-list-item class="bottone-sidebar" routerLink="prodotti">
+        <button mat-button>
           <mat-icon>help</mat-icon> Prodotti
         </button>
       </mat-list-item>
     </mat-nav-list>
   </mat-drawer>
-  <mat-drawer-content>
-    <div style="text-align: center; min-height: 600px">
+  <mat-drawer-content style="height: 100%;">
+    <div style="text-align: center; min-height: 100%; height: 100%;">
       <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>

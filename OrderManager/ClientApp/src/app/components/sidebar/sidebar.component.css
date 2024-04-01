@@ -1,0 +1,13 @@
+.bottone-sidebar{
+}  
+
+.bottone-sidebar *{
+    border: 0px;
+    background-color: transparent;
+    align-content: center;
+}  
+
+.bottone-sidebar:hover {
+    
+    background-color:rgba(0, 193, 120, .7);
+}
