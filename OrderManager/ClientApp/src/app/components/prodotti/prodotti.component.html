@@ -3,7 +3,7 @@
     <div class="form-group row">
       <label class="col-2 col-form-label" for="typeahead-basic">Cerca un prodotto tramite la descrizione:</label>
       <div class="col-10">
-        <input class="form-control" id="typeahead-basic" type="text" class="form-control" />
+        <input class="form-control" id="typeahead-basic" type="text" />
       </div>
     </div>
   </form>
@@ -12,12 +12,14 @@
 <div class="row">
   <table class="col-12 text-center">
     <thead>
-      <th class="col-4">Codice</th>
-      <th class="col-4">Descrizione</th>
-      <th class="col-4">Prezzo</th>
+      <tr>
+        <th>Codice</th>
+        <th>Descrizione</th>
+        <th>Prezzo</th>
+      </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of this.prodotti">
+      <tr *ngFor="let p of prodotti">
         <td class="col-4">{{ p.codice }}</td>
         <td class="col-4">{{ p.descrizione }}</td>
         <td class="col-4">€ {{ p.prezzo }}</td>
