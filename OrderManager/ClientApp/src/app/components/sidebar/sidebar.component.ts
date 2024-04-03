@@ -19,9 +19,9 @@ import { AppRoutingModule } from '../../app-routing.module';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    AppRoutingModule
-  ]
+    AppRoutingModule,
+  ],
 })
 export class SidebarComponent {
-showFiller = true
+  showFiller = true;
 }
