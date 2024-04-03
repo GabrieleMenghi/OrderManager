@@ -8,7 +8,7 @@ export class ConfigService {
   constructor(private http: HttpClient) {}
 
   getProdotti() {
-    var configUrl = 'http://localhost:5006/prodotti';
+    var configUrl = 'http://localhost:5006/api/prodotti';
     return this.http.get(configUrl);
   }
 }

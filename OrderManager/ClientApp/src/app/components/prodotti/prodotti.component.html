@@ -1,28 +1,28 @@
 <header>
   <div class="row">
-    <div class="col-12">
-      <label class="col-2" for="typeahead-basic">Cerca un prodotto:</label>
-      <input class="col-6" id="typeahead-basic" type="text" class="form-control" />
-    </div>
+    <form class="mt-2 mb-4">
+      <div class="form-group row">
+        <label class="col-2 col-form-label" for="typeahead-basic">Cerca un prodotto tramite la descrizione:</label>
+        <div class="col-10">
+          <input class="form-control" id="typeahead-basic" type="text" class="form-control" />
+        </div>
+      </div>
+    </form>
   </div>
 </header>
 <div class="row">
-  <div>
-    <table class="col-12 text-center">
-      <thead>
-        <th class="col-4">Codice</th>
-        <th class="col-4">Descrizione</th>
-        <th class="col-4">Prezzo</th>
-      </thead>
-      <tbody>
-        <div *ngFor="let p of this.prodotti">
-          <tr>
-            <td>{{ p.codice }}</td>
-            <td>{{ p.descrizione }}</td>
-            <td>€ {{ p.prezzo }}</td>
-          </tr>
-        </div>
-      </tbody>
-    </table>
-  </div>
+  <table class="col-12 text-center">
+    <thead>
+      <th class="col-4">Codice</th>
+      <th class="col-4">Descrizione</th>
+      <th class="col-4">Prezzo</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of this.prodotti">
+        <td class="col-4">{{ p.codice }}</td>
+        <td class="col-4">{{ p.descrizione }}</td>
+        <td class="col-4">€ {{ p.prezzo }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

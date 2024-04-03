@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using OrderManager.Services.Int;
 using System.Data;
-using System.Drawing.Printing;
+using System.Web.Http.Cors;
 
 namespace OrderManager.Controllers;
 
+[Route("api/prodotti")]
 [ApiController]
-[Route("prodotti")]
 public class ProdottiController : ControllerBase
 {
     private readonly IProdottiService _prodottiService;

@@ -25,6 +25,17 @@ public class Program
             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         });
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: "*",
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+        });
+
         // Add services to the container.
         builder.Services.AddScoped<IRepositoryProdotti, SqlRepositoryProdotti>();
         builder.Services.AddScoped<IProdottiService, ProdottiService>();
@@ -44,8 +55,11 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
 
-
         }
+
+        app.UseHttpsRedirection();
+        app.UseRouting();
+        app.UseCors("*");
 
         app.UseHttpsRedirection();
 
