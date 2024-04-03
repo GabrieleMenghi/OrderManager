@@ -1,9 +1,9 @@
 <div class="row">
-  <form class="mt-2 mb-4 col-12">
+  <form class="mt-2 mb-4 col-12" [formGroup]="searchProdottiForm">
     <div class="form-group row">
       <label class="col-2 col-form-label" for="typeahead-basic">Cerca un prodotto tramite la descrizione:</label>
       <div class="col-10">
-        <input class="form-control" id="typeahead-basic" type="text" />
+        <input class="form-control" id="typeahead-basic" type="text" formControlName="prodottiSearchText" [(ngModel)]="prodottiSearchText" (ngModelChange)="onTextChange()"/>
       </div>
     </div>
   </form>
@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of prodotti">
+      <tr *ngFor="let p of filteredProdotti">
         <td class="col-4">{{ p.codice }}</td>
         <td class="col-4">{{ p.descrizione }}</td>
         <td class="col-4">€ {{ p.prezzo }}</td>
