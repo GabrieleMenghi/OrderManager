@@ -1,1 +1,18 @@
-<p>import works!</p>
+<div class="col-7 border border-dark mt-3">
+    <div class="row text-center">
+        <div class="col-12">
+            <span>IMPORTA PRODOTTI</span>
+        </div>
+    </div>
+    <div class="row text-center">
+        <label for="importProdottiFilePicker" class="col-6">Scegli un file dal quale importare i prodotti</label>
+        <div class="col-6">
+            <input id="importProdottiFilePicker" type="file" accept=".xlsx, .xlsm" (change)="onFileSelected($event)" />
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-12">
+            <button>Importa</button>
+        </div>
+    </div>
+</div>

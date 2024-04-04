@@ -1,16 +1,15 @@
 <div class="row">
-  <form class="mt-2 mb-4 col-12" [formGroup]="searchProdottiForm">
-    <div class="form-group row">
-      <label class="col-2 col-form-label" for="typeahead-basic">Cerca un prodotto tramite la descrizione:</label>
-      <div class="col-10">
-        <input class="form-control" id="typeahead-basic" type="text" formControlName="prodottiSearchText" [(ngModel)]="prodottiSearchText" (ngModelChange)="onTextChange()"/>
-      </div>
+  <form class="mt-2 mb-4 form-group row" [formGroup]="searchProdottiForm">
+    <label class="col-2 col-form-label" for="typeahead-basic">Cerca un prodotto tramite la descrizione:</label>
+    <div class="col-10">
+      <input class="form-control" id="typeahead-basic" type="text" formControlName="prodottiSearchText"
+        [(ngModel)]="prodottiSearchText" (ngModelChange)="onTextChange()" />
     </div>
   </form>
 </div>
 
 <div class="row">
-  <table class="col-12 text-center">
+  <table class="text-center">
     <thead>
       <tr>
         <th>Codice</th>
