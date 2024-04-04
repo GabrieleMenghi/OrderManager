@@ -19,11 +19,10 @@ export class ProdottiComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.configService
-      .getProdotti()
-      .subscribe((data) => (this.prodotti = data as Array<Prodotto>));
-
-    console.log(this.prodotti);
+    this.configService.getProdotti().subscribe((data) => {
+      this.prodotti = data as Array<Prodotto>;
+      this.filteredProdotti = this.prodotti;
+    });
   }
 
   public prodottiSearchText: any;
@@ -35,8 +34,8 @@ export class ProdottiComponent implements OnInit {
   onTextChange() {
     if (this.prodottiSearchText) {
       const searchText = this.prodottiSearchText.toLowerCase(); // Converti il testo di ricerca in minuscolo
-      this.filteredProdotti = this.prodotti.filter((p) =>
-        p.descrizione.toLowerCase().includes(searchText) // Controlla se la descrizione contiene il testo di ricerca
+      this.filteredProdotti = this.prodotti.filter(
+        (p) => p.descrizione.toLowerCase().includes(searchText) // Controlla se la descrizione contiene il testo di ricerca
       );
     } else {
       // Se il campo di ricerca è vuoto, mostra tutti i prodotti
