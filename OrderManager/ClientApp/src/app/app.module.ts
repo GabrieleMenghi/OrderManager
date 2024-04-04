@@ -14,9 +14,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImportComponent } from './components/import/import.component';
 
 @NgModule({
-  declarations: [AppComponent, ProdottiComponent, HomeComponent],
+  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
