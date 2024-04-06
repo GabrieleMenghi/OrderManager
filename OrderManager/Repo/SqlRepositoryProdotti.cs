@@ -60,6 +60,8 @@ public class SqlRepositoryProdotti : IRepositoryProdotti
             oldProdotto.Descrizione = prodotto.Descrizione;
             oldProdotto.Prezzo = prodotto.Prezzo;
 
+            await _dbContext.SaveChangesAsync();
+
             return oldProdotto;
         }
     }

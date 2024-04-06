@@ -9,6 +9,10 @@
 </div>
 
 <div class="row">
+  <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
+
   <table class="table table-striped" style="width: 100%;">
     <thead>
       <tr>
@@ -18,11 +22,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of filteredProdotti">
-        <td class="col-4">{{ p.codice }}</td>
-        <td class="col-4">{{ p.descrizione }}</td>
-        <td class="col-4">€ {{ p.prezzo }}</td>
-      </tr>
+      <ng-container *ngFor="let p of currentItems">
+        <tr>
+          <td class="col-3">{{ p.codice }}</td>
+          <td class="col-6">{{ p.descrizione }}</td>
+          <td class="col-3">€ {{ p.prezzo }}</td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 </div>

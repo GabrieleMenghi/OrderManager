@@ -15,6 +15,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImportComponent } from './components/import/import.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent],
@@ -27,6 +28,7 @@ import { ImportComponent } from './components/import/import.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    MatPaginatorModule
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],
