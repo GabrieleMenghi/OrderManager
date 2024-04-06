@@ -47,10 +47,10 @@ export class ImportComponent {
 
         await this.configService.importProdotti(formData);
 
-        this._snackBar.open('Import completato', 'Close', {duration: 2000});
+        this._snackBar.open('Import completato', 'Chiudi', {duration: 4000});
       }
     } catch (error) {
-      this._snackBar.open('Import in errore: ' + error);
+      this._snackBar.open('Import in errore: ' + error, 'Chiudi', {duration: 4000});
     }
   }
 }
