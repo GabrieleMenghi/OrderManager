@@ -39,6 +39,7 @@ public class Program
         // Add services to the container.
         builder.Services.AddScoped<IRepositoryProdotti, SqlRepositoryProdotti>();
         builder.Services.AddScoped<IProdottiService, ProdottiService>();
+        builder.Services.AddScoped<IProdottiParserService, ProdottiParserService>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();

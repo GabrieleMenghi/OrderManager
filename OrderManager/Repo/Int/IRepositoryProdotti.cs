@@ -8,4 +8,5 @@ public interface IRepositoryProdotti
     Task<List<Prodotto>> GetProdottiByDescrizione(string descrizione);
     Task<List<Prodotto>> GetProdottiByCodice(string codice);
     Task<Prodotto> AddProdotto(Prodotto prodotto);
+    Task<Prodotto> UpsertProdotto(Prodotto prodotto);
 }

@@ -11,4 +11,9 @@ export class ConfigService {
     var configUrl = 'http://localhost:5006/api/prodotti';
     return this.http.get(configUrl);
   }
+
+  importProdotti() {
+    var configUrl = 'http://localhost:5006/api/prodotti/ImportProdottiFromExcel';
+    return this.http.get(configUrl);
+  }
 }

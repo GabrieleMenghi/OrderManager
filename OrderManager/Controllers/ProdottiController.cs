@@ -1,5 +1,6 @@
 ﻿using Commons.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using OrderManager.Models.Requests.Api;
 using OrderManager.Services.Int;
 using System.Data;
 using System.Web.Http.Cors;
@@ -11,10 +12,12 @@ namespace OrderManager.Controllers;
 public class ProdottiController : ControllerBase
 {
     private readonly IProdottiService _prodottiService;
+    private readonly IProdottiParserService _prodottiParserService;
 
-    public ProdottiController(IProdottiService prodottiService)
+    public ProdottiController(IProdottiService prodottiService, IProdottiParserService prodottiParserService)
     {
         _prodottiService = prodottiService;
+        _prodottiParserService = prodottiParserService;
     }
 
     [HttpGet]
@@ -23,35 +26,20 @@ public class ProdottiController : ControllerBase
         return Ok(await _prodottiService.GetProdottiAsync());
     }
 
-    [HttpGet("ProvaExcel")]
-    public async Task<IActionResult> ProvaReadExcel()
+    [HttpGet("ImportProdottiFromExcel")]
+    public async Task<IActionResult> ImportProdottiFromExcelAsync(ImportProdottiFromExcelApiRequest request)
     {
-        try
+        //string filename = @"C:\Users\Gabriele\Desktop\Prova.xlsx";
+        var fileExists = _prodottiParserService.CheckFileExists(request.FileName);
+        if(fileExists)
         {
-            //List<object> rowsString = new();
-            DataTable dt = ExcelHelper.ReadExcel(@"C:\Users\Gabriele\Desktop\Prova.xlsx");
-            foreach (DataRow row in dt.Rows)
-            {
-                for (int i = 0; i < dt.Columns.Count; i++)
-                {
-                    var rowValue = row[i].ToString();
-                    if (i == 3)
-                    {
-                        Console.WriteLine(decimal.Parse(rowValue));
-                        //rowsString.Add(decimal.Parse(row[i].ToString()));
-                    }
-                    else
-                    {
-                        Console.WriteLine(rowValue);
-                        //rowsString.Add(row[i].ToString());
-                    }
-                }
-            }
-            return Ok(/*rowsString*/);
+            var prodotti = _prodottiParserService.GetProdottiFromExcelFile(request.FileName);
+            var prodottiUpserted = await _prodottiService.UpsertProdottoListAsync(prodotti);
+            return Ok(prodottiUpserted);
         }
-        catch (Exception ex)
+        else
         {
-            throw;
+            return NotFound("File non esistente");
         }
     }
 }

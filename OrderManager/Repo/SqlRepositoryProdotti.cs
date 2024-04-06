@@ -43,4 +43,24 @@ public class SqlRepositoryProdotti : IRepositoryProdotti
 
         return prodotto;
     }
+
+    public async Task<Prodotto> UpsertProdotto(Prodotto prodotto)
+    {
+        var oldProdotto = await _dbContext.Prodotti.Where(x => x.Codice == prodotto.Codice).SingleOrDefaultAsync();
+
+        if (oldProdotto == null)
+        {
+            // Se il prodotto non esiste lo aggiungo
+            return await this.AddProdotto(prodotto);
+        }
+        else
+        {
+            // Se esiste gia', aggiorno i suoi campi
+            oldProdotto.Codice = prodotto.Codice;
+            oldProdotto.Descrizione = prodotto.Descrizione;
+            oldProdotto.Prezzo = prodotto.Prezzo;
+
+            return oldProdotto;
+        }
+    }
 }

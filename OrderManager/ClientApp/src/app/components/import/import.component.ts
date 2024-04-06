@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './import.component.css'
 })
 export class ImportComponent {
+
   onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
     const allowedExtensions = ['.xlsx', '.xlsm'];
@@ -22,4 +23,5 @@ export class ImportComponent {
       }
     }
   }
+  
 }

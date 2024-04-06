@@ -17,4 +17,15 @@ public class ProdottiService : IProdottiService
     {
         return await _prodottiRepo.GetProdotti();
     }
+
+    public async Task<List<Prodotto>> UpsertProdottoListAsync(List<Prodotto> prodottiToUpsert)
+    {
+        var upsertedProdotti = new List<Prodotto>();
+        foreach (var prodotto in prodottiToUpsert)
+        {
+            var upsertedProdotto = await _prodottiRepo.UpsertProdotto(prodotto);
+            upsertedProdotti.Add(upsertedProdotto);
+        }
+        return upsertedProdotti;
+    }
 }
