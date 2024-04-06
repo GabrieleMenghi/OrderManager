@@ -1,4 +1,5 @@
-﻿using Commons.Helpers;
+﻿using Azure.Core;
+using Commons.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using OrderManager.Models.Requests.Api;
 using OrderManager.Services.Int;
@@ -31,7 +32,7 @@ public class ProdottiController : ControllerBase
     {
         //string filename = @"C:\Users\Gabriele\Desktop\Prova.xlsx";
         var fileExists = _prodottiParserService.CheckFileExists(request.FileName);
-        if(fileExists)
+        if (fileExists)
         {
             var prodotti = _prodottiParserService.GetProdottiFromExcelFile(request.FileName);
             var prodottiUpserted = await _prodottiService.UpsertProdottoListAsync(prodotti);
@@ -40,6 +41,22 @@ public class ProdottiController : ControllerBase
         else
         {
             return NotFound("File non esistente");
+        }
+    }
+
+    [HttpPost("ImportProdottiFromExcelStream")]
+    public async Task<IActionResult> ImportProdottiFromExcelAsync(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+        {
+            return BadRequest("Nessun file ricevuto");
+        }
+
+        using (var stream = file.OpenReadStream())
+        {
+            var prodotti = _prodottiParserService.GetProdottiFromExcelFileStream(stream);
+            var prodottiUpserted = await _prodottiService.UpsertProdottoListAsync(prodotti);
+            return Ok(prodottiUpserted);
         }
     }
 }

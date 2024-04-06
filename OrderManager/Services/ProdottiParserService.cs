@@ -52,4 +52,33 @@ public class ProdottiParserService : IProdottiParserService
             return prodotti;
         }
     }
+
+    public List<Prodotto> GetProdottiFromExcelFileStream(Stream stream)
+    {
+        List<Prodotto> prodotti = new();
+        try
+        {
+            DataTable dt = ExcelHelper.ReadExcelFromStream(stream);
+            int indiceColonna = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                indiceColonna = 0;//A
+                string codice = (string)row[indiceColonna];
+
+                indiceColonna = 1;//B
+                string descrizione = (string)row[indiceColonna];
+
+                indiceColonna = 2;//C
+                decimal prezzo = decimal.Parse(row[indiceColonna].ToString());
+
+                var prodotto = Prodotto.ProdottoFactoryCreate(codice, descrizione, prezzo);
+                prodotti.Add(prodotto);
+            }
+            return prodotti;
+        }
+        catch (Exception)
+        {
+            return prodotti;
+        }
+    }
 }

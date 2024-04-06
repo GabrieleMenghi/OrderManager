@@ -18,8 +18,8 @@ export class ProdottiComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {
-    this.configService.getProdotti().subscribe((data) => {
+  async ngOnInit() {
+    (await this.configService.getProdotti()).subscribe((data) => {
       this.prodotti = data as Array<Prodotto>;
       this.filteredProdotti = this.prodotti;
     });

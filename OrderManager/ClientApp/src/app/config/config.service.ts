@@ -7,13 +7,25 @@ import { HttpClient } from '@angular/common/http';
 export class ConfigService {
   constructor(private http: HttpClient) {}
 
-  getProdotti() {
+  async getProdotti() {
     var configUrl = 'http://localhost:5006/api/prodotti';
     return this.http.get(configUrl);
   }
 
-  importProdotti() {
-    var configUrl = 'http://localhost:5006/api/prodotti/ImportProdottiFromExcel';
-    return this.http.get(configUrl);
+  async importProdotti(formData: FormData) {
+    try {
+      var configUrl = 'http://localhost:5006/api/prodotti/ImportProdottiFromExcelStream';
+      await this.http.post<any>(configUrl, formData).subscribe({
+        next: () => {
+          console.log('Richiesta eseguita');
+        },
+        error: (error) => {
+          console.error('Errore durante l\'invio della richiesta:', error);
+        }
+      });
+
+    } catch (error) {
+      console.log('Errore durante l\'invio della richiesta:', error);
+    }
   }
 }

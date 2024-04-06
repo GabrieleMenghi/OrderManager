@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
+import { ConfigService } from '../../config/config.service';
 
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
-  styleUrl: './import.component.css'
+  styleUrl: './import.component.css',
 })
 export class ImportComponent {
+  file: any;
+
+  constructor(public configService: ConfigService){}
 
   onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
@@ -16,12 +20,21 @@ export class ImportComponent {
       const fileExtension = selectedFile.name.split('.').pop()?.toLowerCase();
       if (fileExtension && allowedExtensions.includes('.' + fileExtension)) {
         // Il file ha un'estensione consentita, puoi procedere con il tuo codice
+        this.file = selectedFile;
       } else {
         // Il file ha un'estensione non consentita
-        alert("Sono consentiti solo file .xlsx o .xlsm");
+        alert('Sono consentiti solo file .xlsx o .xlsm');
         event.target.value = null;
       }
     }
   }
-  
+
+  async importProdotti() {
+    if (this.file) {
+      const formData: FormData = new FormData();
+      formData.append('file', this.file);
+
+      await this.configService.importProdotti(formData);
+    }
+  }
 }
