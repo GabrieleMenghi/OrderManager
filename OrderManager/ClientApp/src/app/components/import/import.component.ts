@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { ConfigService } from '../../config/config.service';
+import {
+  MatSnackBar,
+  MatSnackBarAction,
+  MatSnackBarActions,
+  MatSnackBarLabel,
+  MatSnackBarRef,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-import',
@@ -9,7 +16,10 @@ import { ConfigService } from '../../config/config.service';
 export class ImportComponent {
   file: any;
 
-  constructor(public configService: ConfigService){}
+  constructor(
+    public configService: ConfigService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   onFileSelected(event: any) {
     const selectedFile = event.target.files[0];
@@ -30,11 +40,17 @@ export class ImportComponent {
   }
 
   async importProdotti() {
-    if (this.file) {
-      const formData: FormData = new FormData();
-      formData.append('file', this.file);
+    try {
+      if (this.file) {
+        const formData: FormData = new FormData();
+        formData.append('file', this.file);
 
-      await this.configService.importProdotti(formData);
+        await this.configService.importProdotti(formData);
+
+        this._snackBar.open('Import completato', 'Close', {duration: 2000});
+      }
+    } catch (error) {
+      this._snackBar.open('Import in errore: ' + error);
     }
   }
 }

@@ -20,12 +20,12 @@ export class ConfigService {
           console.log('Richiesta eseguita');
         },
         error: (error) => {
-          console.error('Errore durante l\'invio della richiesta:', error);
+          throw error;
         }
       });
 
     } catch (error) {
-      console.log('Errore durante l\'invio della richiesta:', error);
+      throw error;
     }
   }
 }

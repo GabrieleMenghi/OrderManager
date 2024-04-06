@@ -63,10 +63,10 @@ public class ProdottiParserService : IProdottiParserService
             foreach (DataRow row in dt.Rows)
             {
                 indiceColonna = 0;//A
-                string codice = (string)row[indiceColonna];
+                string codice = row[indiceColonna].ToString();
 
                 indiceColonna = 1;//B
-                string descrizione = (string)row[indiceColonna];
+                string descrizione = row[indiceColonna].ToString();
 
                 indiceColonna = 2;//C
                 decimal prezzo = decimal.Parse(row[indiceColonna].ToString());
