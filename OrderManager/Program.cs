@@ -48,6 +48,7 @@ public class Program
         builder.Services.AddScoped<IRepositoryProdotti, SqlRepositoryProdotti>();
         builder.Services.AddScoped<IProdottiService, ProdottiService>();
         builder.Services.AddScoped<IProdottiParserService, ProdottiParserService>();
+        builder.Services.AddScoped<IRepositoryClienti, SqlRepositoryClienti>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();

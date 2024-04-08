@@ -8,4 +8,5 @@ public class OrderManagerDBContext : DbContext
     { }
 
     public DbSet<Prodotto> Prodotti { get; set; }
+    public DbSet<Cliente> Clienti { get; set; }
 }
