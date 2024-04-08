@@ -1,10 +1,6 @@
-﻿using Azure.Core;
-using Commons.Helpers;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OrderManager.Models.Requests.Api;
 using OrderManager.Services.Int;
-using System.Data;
-using System.Web.Http.Cors;
 
 namespace OrderManager.Controllers;
 
