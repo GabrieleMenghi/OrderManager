@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class ConfigService {
   constructor(private http: HttpClient) {}
 
+  // Prodotti
   async getProdotti() {
     var configUrl = 'http://localhost:5006/api/prodotti';
     return this.http.get(configUrl);
@@ -27,5 +28,11 @@ export class ConfigService {
     } catch (error) {
       throw error;
     }
+  }
+
+  // Clienti
+  async getClienti() {
+    var configUrl = 'http://localhost:5006/api/clienti';
+    return this.http.get(configUrl);
   }
 }

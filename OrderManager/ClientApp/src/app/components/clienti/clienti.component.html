@@ -1,0 +1,40 @@
+<div class="row">
+    <form class="mt-2 mb-4 form-group row" [formGroup]="searchClientiForm">
+      <label class="col-2 col-form-label" for="typeahead-basic">Cerca un cliente per nome:</label>
+      <div class="col-10">
+        <input class="form-control" id="typeahead-basic" type="text" formControlName="clientiSearchText"
+          [(ngModel)]="clientiSearchText" (ngModelChange)="onTextChange()" />
+      </div>
+    </form>
+  </div>
+  
+  <div class="row">
+    <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                   (page)="onPageChange($event)">
+    </mat-paginator>
+  
+    <table class="table table-striped" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Codice cliente</th>
+          <th>Nome</th>
+          <th>Indirizzo</th>
+          <th>Telefono</th>
+          <th>Partita IVA</th>
+          <th>Codice fiscale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let c of currentItems">
+          <tr>
+            <td class="col-1">{{ c.codiceCliente }}</td>
+            <td class="col-3">{{ c.nome }}</td>
+            <td class="col-2">€ {{ c.indirizzo }}</td>
+            <td class="col-2">€ {{ c.telefono }}</td>
+            <td class="col-2">€ {{ c.partitaIva }}</td>
+            <td class="col-2">€ {{ c.codiceFiscale }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>

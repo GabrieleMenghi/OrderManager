@@ -16,9 +16,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImportComponent } from './components/import/import.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ClientiComponent } from './components/clienti/clienti.component';
 
 @NgModule({
-  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent],
+  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
