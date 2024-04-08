@@ -17,9 +17,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImportComponent } from './components/import/import.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ClientiComponent } from './components/clienti/clienti.component';
+import { OrdiniComponent } from './components/ordini/ordini.component';
 
 @NgModule({
-  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent],
+  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent, OrdiniComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
