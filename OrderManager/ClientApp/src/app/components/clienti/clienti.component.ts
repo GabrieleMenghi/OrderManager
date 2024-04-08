@@ -25,6 +25,7 @@ export class ClientiComponent implements OnInit{
     (await this.configService.getClienti()).subscribe((data) => {
       this.clienti = data as Array<Cliente>;
       this.filteredClienti = this.clienti;
+      this.currentItems = this.filteredClienti;
     });
 
     // Numero totale di elementi

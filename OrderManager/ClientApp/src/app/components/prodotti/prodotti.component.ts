@@ -25,6 +25,7 @@ export class ProdottiComponent implements OnInit {
     (await this.configService.getProdotti()).subscribe((data) => {
       this.prodotti = data as Array<Prodotto>;
       this.filteredProdotti = this.prodotti;
+      this.currentItems = this.filteredProdotti;
     });
 
     // Numero totale di elementi
