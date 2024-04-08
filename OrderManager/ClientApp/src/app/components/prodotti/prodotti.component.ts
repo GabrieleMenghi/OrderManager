@@ -24,14 +24,17 @@ export class ProdottiComponent implements OnInit {
   async ngOnInit() {
     (await this.configService.getProdotti()).subscribe((data) => {
       this.prodotti = data as Array<Prodotto>;
+
+      // Eseguito dentro la callback, altrimenti le assegnazioni sarebbero avvenute prima, ad array vuoti
       this.filteredProdotti = this.prodotti;
       this.currentItems = this.filteredProdotti;
+  
+      // Numero totale di elementi
+      this.totalItems = this.filteredProdotti.length;
+      // Chiamata iniziale per impostare correttamente gli elementi della pagina corrente
+      this.onPageChange({pageIndex: 0, pageSize: this.pageSize});
     });
-
-    // Numero totale di elementi
-    this.totalItems = this.filteredProdotti.length;
-
-    this.onPageChange({pageIndex: 0, pageSize: this.pageSize}); // Chiamata iniziale per impostare correttamente gli elementi della pagina corrente
+    
   }
 
   public prodottiSearchText: any;

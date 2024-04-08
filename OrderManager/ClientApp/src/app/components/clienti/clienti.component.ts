@@ -24,14 +24,15 @@ export class ClientiComponent implements OnInit{
   async ngOnInit() {
     (await this.configService.getClienti()).subscribe((data) => {
       this.clienti = data as Array<Cliente>;
+      
       this.filteredClienti = this.clienti;
       this.currentItems = this.filteredClienti;
+      // Numero totale di elementi
+      this.totalItems = this.filteredClienti.length;
+  
+      this.onPageChange({pageIndex: 0, pageSize: this.pageSize}); // Chiamata iniziale per impostare correttamente gli elementi della pagina corrente
     });
 
-    // Numero totale di elementi
-    this.totalItems = this.filteredClienti.length;
-
-    this.onPageChange({pageIndex: 0, pageSize: this.pageSize}); // Chiamata iniziale per impostare correttamente gli elementi della pagina corrente
   }
 
   public clientiSearchText: any;
