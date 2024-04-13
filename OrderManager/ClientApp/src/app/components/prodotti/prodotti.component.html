@@ -8,7 +8,7 @@
 </div>
 
 <div class="row mx-2">
-  <div class="col-12 mat-elevation-z5 p-0 m-0" style="box-sizing: border-box;">
+  <div class="col-12 mat-elevation-z5 p-0 m-0">
     <table mat-table [dataSource]="dataSource" matSort>
 
       <!-- Codice prodotto -->
@@ -20,7 +20,7 @@
       <!-- Descrizione -->
       <ng-container matColumnDef="descrizione">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrizione </th>
-        <td mat-cell *matCellDef="let row"> {{row.descrizione}}% </td>
+        <td mat-cell *matCellDef="let row"> {{row.descrizione}} </td>
       </ng-container>
 
       <!-- Prezzo -->
@@ -38,6 +38,6 @@
       </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleziona pagina dei prodotti"></mat-paginator>
   </div>
 </div>
