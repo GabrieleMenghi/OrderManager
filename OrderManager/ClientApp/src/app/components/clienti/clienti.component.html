@@ -1,102 +1,61 @@
-<!--<div class="row">
-    <form class="mt-2 mb-4 form-group row" [formGroup]="searchClientiForm">
-      <label class="col-2 col-form-label" for="typeahead-basic">Cerca un cliente per nome:</label>
-      <div class="col-10">
-        <input class="form-control" id="typeahead-basic" type="text" formControlName="clientiSearchText"
-          [(ngModel)]="clientiSearchText" (ngModelChange)="onTextChange()" />
-      </div>
-    </form>
+<div class="row mx-2">
+  <div class="col-12">
+    <mat-form-field class="col-12 my-2">
+      <mat-label>Filtra clienti</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
   </div>
-  
-  <div class="row">
-    <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-                   (page)="onPageChange($event)">
-    </mat-paginator>
-  
-    <table class="table table-striped" style="width: 100%;">
-      <thead>
-        <tr>
-          <th>Codice cliente</th>
-          <th>Nome</th>
-          <th>Indirizzo</th>
-          <th>Telefono</th>
-          <th>Partita IVA</th>
-          <th>Codice fiscale</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let c of currentItems">
-          <tr>
-            <td class="col-1">{{ c.codiceCliente }}</td>
-            <td class="col-3">{{ c.nome }}</td>
-            <td class="col-2">{{ c.indirizzo }}</td>
-            <td class="col-2">{{ c.telefono }}</td>
-            <td class="col-2">{{ c.partitaIva }}</td>
-            <td class="col-2">{{ c.codiceFiscale }}</td>
-          </tr>
-        </ng-container>
-      </tbody>
+</div>
+
+<div class="row mx-2">
+  <div class="col-12 mat-elevation-z5 p-0 m-0">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Codice cliente -->
+      <ng-container matColumnDef="codice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Codice cliente </th>
+        <td mat-cell *matCellDef="let row"> {{row.codiceCliente}} </td>
+      </ng-container>
+
+      <!-- Nome -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+        <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
+      </ng-container>
+
+      <!-- Indirizzo -->
+      <ng-container matColumnDef="indirizzo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Indirizzo </th>
+        <td mat-cell *matCellDef="let row"> {{row.indirizzo}} </td>
+      </ng-container>
+
+      <!-- Telefono -->
+      <ng-container matColumnDef="telefono">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
+        <td mat-cell *matCellDef="let row"> {{row.telefono}} </td>
+      </ng-container>
+
+      <!-- Partita IVA -->
+      <ng-container matColumnDef="partitaIva">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Partita IVA </th>
+        <td mat-cell *matCellDef="let row"> {{row.partitaIva}} </td>
+      </ng-container>
+
+      <!-- Codice fiscale -->
+      <ng-container matColumnDef="codiceFiscale">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Codice fiscale </th>
+        <td mat-cell *matCellDef="let row"> {{row.codiceFiscale}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Nessun risultato corrispondente a "{{input.value}}"</td>
+      </tr>
     </table>
-  </div>-->
 
-  <div class="row mx-2">
-    <div class="col-12">
-      <mat-form-field class="col-12 my-2">
-        <mat-label>Filtra clienti</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input>
-      </mat-form-field>
-    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleziona pagina dei clienti"></mat-paginator>
   </div>
-  
-  <div class="row mx-2">
-    <div class="col-12 mat-elevation-z5 p-0 m-0">
-      <table mat-table [dataSource]="dataSource" matSort>
-  
-        <!-- Codice cliente -->
-        <ng-container matColumnDef="codice">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Codice cliente </th>
-          <td mat-cell *matCellDef="let row"> {{row.codiceCliente}} </td>
-        </ng-container>
-  
-        <!-- Nome -->
-        <ng-container matColumnDef="nome">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
-          <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
-        </ng-container>
-  
-        <!-- Indirizzo -->
-        <ng-container matColumnDef="indirizzo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Indirizzo </th>
-          <td mat-cell *matCellDef="let row"> {{row.indirizzo}} </td>
-        </ng-container>
-
-        <!-- Telefono -->
-        <ng-container matColumnDef="telefono">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
-          <td mat-cell *matCellDef="let row"> {{row.telefono}} </td>
-        </ng-container>
-
-        <!-- Partita IVA -->
-        <ng-container matColumnDef="partitaIva">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Partita IVA </th>
-          <td mat-cell *matCellDef="let row"> {{row.partitaIva}} </td>
-        </ng-container>
-
-        <!-- Codice fiscale -->
-        <ng-container matColumnDef="codiceFiscale">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Codice fiscale </th>
-          <td mat-cell *matCellDef="let row"> {{row.codiceFiscale}} </td>
-        </ng-container>
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
-        <!-- Row shown when there is no matching data. -->
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">Nessun risultato corrispondente a "{{input.value}}"</td>
-        </tr>
-      </table>
-  
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleziona pagina dei clienti"></mat-paginator>
-    </div>
-  </div>
+</div>
