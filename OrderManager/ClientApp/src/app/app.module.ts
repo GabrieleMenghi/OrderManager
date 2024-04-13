@@ -12,7 +12,6 @@ import { MaterialModule } from './material-module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HomeComponent } from './components/home/home.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImportComponent } from './components/import/import.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -27,7 +26,6 @@ import { OrdiniComponent } from './components/ordini/ordini.component';
     HttpClientModule,
     MaterialModule,
     SidebarComponent,
-    NgbModule,
     FormsModule,
     ReactiveFormsModule,
     MatPaginatorModule
