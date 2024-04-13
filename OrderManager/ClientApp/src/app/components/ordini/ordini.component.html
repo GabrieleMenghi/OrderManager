@@ -1,1 +1,23 @@
-<p>ordini works!</p>
+<!-- Seleziona cliente -->
+<div class="row my-2">
+    <div class="col-12">
+        <form class="example-form">
+            <mat-form-field class="example-full-width col-12">
+                <mat-label>Seleziona un cliente</mat-label>
+                <input type="text" aria-label="Seleziona un cliente" matInput [formControl]="myClientsControl"
+                    [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    @for (option of clientsFilteredOptions | async; track option) {
+                    <mat-option [value]="option">{{option}}</mat-option>
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <button mat-stroked-button [disabled]="!myClientsControl.valid">Crea ordine</button>
+    </div>
+</div>
