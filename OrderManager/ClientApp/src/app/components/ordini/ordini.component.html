@@ -4,7 +4,7 @@
         <form class="example-form">
             <mat-form-field class="example-full-width col-12">
                 <mat-label>Seleziona un cliente</mat-label>
-                <input type="text" aria-label="Seleziona un cliente" matInput [formControl]="myClientsControl"
+                <input type="text" aria-label="Seleziona un cliente" matInput [formControl]="clientsControl"
                     [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                     @for (option of clientsFilteredOptions | async; track option) {
@@ -16,8 +16,31 @@
     </div>
 </div>
 
-<div class="row">
+<!-- Seleziona prodotti -->
+<!--<div class="row">
     <div class="col-12">
-        <button mat-stroked-button [disabled]="!myClientsControl.valid">Crea ordine</button>
+        <input class="col-12" type="text" placeholder="Seleziona i prodotti" matInput
+            [matAutocomplete]="autoComplete" [formControl]="productsControl">
+        
+        <mat-autocomplete #autoComplete="matAutocomplete" class="col-12">
+            <ng-container *ngFor="let item of displayedProducts">
+                <mat-option (click)="optionClicked($event, item);">
+                    (change)="toggleSelection(item)" (click)="$event.stopPropagation()" erano dentro mat-checkbox
+                    <mat-checkbox [checked]="item.selected">
+                        {{ item.prodotto.descrizione }}
+                    </mat-checkbox>
+                </mat-option>
+            </ng-container>
+        </mat-autocomplete>
+
+        <div *ngFor="let sel of this.selectedProducts">
+            <span>{{sel.prodotto.descrizione}}</span>
+        </div>
+    </div>
+</div>-->
+
+<div class="row my-2">
+    <div class="col-12">
+        <button mat-stroked-button [disabled]="!clientsControl.valid" (click)="creaOrdine()">Crea ordine</button>
     </div>
 </div>
