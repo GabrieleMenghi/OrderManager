@@ -16,28 +16,169 @@
     </div>
 </div>
 
-<!-- Seleziona prodotti -->
-<!--<div class="row">
+<div class="row my-2">
     <div class="col-12">
-        <input class="col-12" type="text" placeholder="Seleziona i prodotti" matInput
-            [matAutocomplete]="autoComplete" [formControl]="productsControl">
-        
-        <mat-autocomplete #autoComplete="matAutocomplete" class="col-12">
-            <ng-container *ngFor="let item of displayedProducts">
-                <mat-option (click)="optionClicked($event, item);">
-                    (change)="toggleSelection(item)" (click)="$event.stopPropagation()" erano dentro mat-checkbox
-                    <mat-checkbox [checked]="item.selected">
-                        {{ item.prodotto.descrizione }}
-                    </mat-checkbox>
-                </mat-option>
-            </ng-container>
-        </mat-autocomplete>
+        F.F. <input type="checkbox" (click)="ff()" />
+    </div>
+</div>
 
-        <div *ngFor="let sel of this.selectedProducts">
-            <span>{{sel.prodotto.descrizione}}</span>
+<div class="row">
+    <div class="col-12">
+
+        <div class="row mx-2">
+            <div class="col-12">
+                <mat-form-field class="col-12 my-2">
+                    <mat-label>Filtra prodotti</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row mx-2">
+            <div class="col-12 mat-elevation-z5 p-0 m-0">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- Codice prodotto -->
+                    <ng-container matColumnDef="codice">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Codice prodotto </th>
+                        <td mat-cell *matCellDef="let row"> {{row.codice}} </td>
+                    </ng-container>
+
+                    <!-- Descrizione -->
+                    <ng-container matColumnDef="descrizione">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrizione </th>
+                        <td mat-cell *matCellDef="let row"> {{row.descrizione}} </td>
+                    </ng-container>
+
+                    <!-- Prezzo -->
+                    <ng-container matColumnDef="prezzo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prezzo </th>
+                        <td mat-cell *matCellDef="let row"> {{row.prezzo | currency:'EUR':'symbol':'1.2-2'}} </td>
+                    </ng-container>
+
+                    <!-- Unita di misura -->
+                    <ng-container matColumnDef="unitaMisura">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Unità di misura </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-select [(ngModel)]="row.unitaMisura">
+                                <ng-container *ngFor="let um of this.unitaDiMisuraList">
+                                    <mat-option [value]="um">{{um}}</mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </td>
+                    </ng-container>
+
+                    <!-- Quantita -->
+                    <ng-container matColumnDef="quantita">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantità </th>
+                        <td mat-cell *matCellDef="let row">
+                            <input type="number" [(ngModel)]="row.quantita" />
+                        </td>
+                    </ng-container>
+
+                    <!-- Aggiungi -->
+                    <ng-container matColumnDef="aggiungi">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                        <td mat-cell *matCellDef="let row">
+                            <button [disabled]="!row.unitaMisura || !row.quantita" (click)="aggiungiRigaOrdine(row)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">Nessun risultato corrispondente a "{{input.value}}"</td>
+                    </tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5]" aria-label="Seleziona pagina dei prodotti"></mat-paginator>
+            </div>
         </div>
     </div>
-</div>-->
+</div>
+
+<!-- Prodotti selezionati -->
+<div class="row">
+    <div class="col-12">
+        <table>
+            <tbody>
+                <tr *ngFor="let selRow of this.selectedRigheOrdine">
+                    <td>
+                        {{selRow.prodotto.descrizione}}
+                    </td>
+                    <td>
+                        {{selRow.unitaMisura}}
+                    </td>
+                    <td>
+                        {{selRow.quantita}}
+                    </td>
+                    <td>
+                        <button (click)="rimuoviRigaOrdine(selRow)">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Tabella SOLO per file-->
+<style>
+    .tabellaProdottiFile{
+        font-size: 5px; 
+        width: 100%;
+    }
+
+    .tabellaClientiFile{
+        font-size: 5px; 
+        width: 100%;
+    }
+</style>
+<div style="display: none;">
+    <div id="tabellaPerFile">
+        <table class="tabellaClientiFile">
+            <tbody>
+                <tr>
+                    <td>{{clientsControl.value}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <span *ngIf="this.fareFattura">F.F.</span>
+        <span *ngIf="!this.fareFattura"></span>
+
+        <table class="tabellaProdottiFile">
+            <thead>
+                <th>Note</th>
+                <th>Quantità</th>
+                <th>Codice</th>
+                <th>Descrizione</th>
+                <th>Prezzo</th>
+                <th>Prezzo totale</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let selRow of this.selectedRigheOrdine">
+                    <td></td>
+                    <td>{{selRow.unitaMisura}} {{selRow.quantita}}</td>
+                    <td>{{selRow.prodotto.codice}}</td>
+                    <td>{{selRow.prodotto.descrizione}}</td>
+                    <td>{{selRow.prodotto.prezzo | currency:'EUR':'symbol':'1.2-2'}}</td>
+                    <td>{{selRow.quantita * selRow.prodotto.prezzo | currency:'EUR':'symbol':'1.2-2'}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: end;">Totale: </td>
+                    <td style="border-top: .2px dashed black;">{{this.totaleOrdine | currency:'EUR':'symbol':'1.2-2'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
 <div class="row my-2">
     <div class="col-12">

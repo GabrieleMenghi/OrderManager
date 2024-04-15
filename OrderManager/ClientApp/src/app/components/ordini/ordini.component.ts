@@ -1,25 +1,54 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Cliente } from '../../models/cliente.model';
 import { ConfigService } from '../../config/config.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { Prodotto } from '../../models/prodotto.model';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { RigaOrdine } from '../../models/rigaOrdine.model';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-ordini',
   templateUrl: './ordini.component.html',
   styleUrl: './ordini.component.css',
 })
-export class OrdiniComponent implements OnInit {
+export class OrdiniComponent implements OnInit, AfterViewInit {
   // Clienti
   clientsControl = new FormControl('', [Validators.required]);
   clienti: Array<Cliente> = [];
   options: string[] = this.clienti.map((x) => x.nome);
   clientsFilteredOptions: Observable<string[]>;
 
+  fareFattura: boolean = false;
+  totaleOrdine: number;
+
+  displayedColumns: string[] = [
+    'codice',
+    'descrizione',
+    'prezzo',
+    'unitaMisura',
+    'quantita',
+    'aggiungi',
+  ];
+  dataSource: MatTableDataSource<Prodotto>;
   prodotti: Array<Prodotto> = [];
-  
-  constructor(private configService: ConfigService) {}
+  unitaDiMisuraList: Array<string> = ['PZ', 'CT'];
+
+  selectedRigheOrdine: Array<RigaOrdine> = [];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(private configService: ConfigService) {
+    this.dataSource = new MatTableDataSource(this.prodotti);
+  }
+
+  ff() {
+    this.fareFattura = !this.fareFattura;
+  }
 
   async ngOnInit() {
     this.clientsFilteredOptions = this.clientsControl.valueChanges.pipe(
@@ -37,7 +66,7 @@ export class OrdiniComponent implements OnInit {
 
     (await this.configService.getProdotti()).subscribe((data) => {
       this.prodotti = data as Array<Prodotto>;
-      
+      this.dataSource.data = this.prodotti;
     });
   }
 
@@ -54,9 +83,71 @@ export class OrdiniComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  aggiungiRigaOrdine(row: any) {
+    var selectedProdottiCodici = this.selectedRigheOrdine.map(
+      (x) => x.prodotto.codice
+    );
+    if (!selectedProdottiCodici.includes(row.codice)) {
+      var prodotto = new Prodotto(row.codice, row.descrizione, row.prezzo);
+      var rigaOrdineToAdd = RigaOrdine.RigaOrdineFactory(
+        prodotto,
+        row.unitaMisura,
+        row.quantita
+      );
+      this.selectedRigheOrdine.push(rigaOrdineToAdd);
+      this.totaleOrdine = this.selectedRigheOrdine.reduce(
+        (sum, current) => sum + (current.prodotto.prezzo * current.quantita),
+        0
+      );
+    }
+    console.log(this.totaleOrdine);
+  }
+
+  rimuoviRigaOrdine(selRow: any) {
+    var rigaOrdineToDelete = this.selectedRigheOrdine.find(
+      (x) => x.prodotto.codice === selRow.prodotto.codice
+    );
+    if (rigaOrdineToDelete) {
+      const index = this.selectedRigheOrdine.indexOf(rigaOrdineToDelete, 0);
+      if (index > -1) {
+        this.selectedRigheOrdine.splice(index, 1);
+        this.totaleOrdine = this.selectedRigheOrdine.reduce(
+          (sum, current) => sum + (current.prodotto.prezzo * current.quantita),
+          0
+        );
+      }
+    }
+  }
+
   // Ordini
   creaOrdine() {
-    //console.log(this.selectedProducts);
+    // Creazione di un nuovo documento PDF
+    const doc = new jsPDF();
+
+    // Aggiunta della tabella HTML al documento
+    const element = document.getElementById('tabellaPerFile');
+    if (element) {
+      doc.html(element, {
+        callback: function (doc) {
+          // Salvataggio del documento come file PDF
+          doc.save('ordine.pdf');
+        },
+      });
+    }
   }
 }
 
@@ -124,7 +215,7 @@ export class OrdiniComponent implements OnInit {
   }
   */
 
-  /* Old working products selection - autocomplete + checkboxes
+/* Old working products selection - autocomplete + checkboxes
 
   // Prodotti
   productsControl = new FormControl();
