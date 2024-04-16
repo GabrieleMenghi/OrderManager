@@ -60,11 +60,11 @@
                     <ng-container matColumnDef="unitaMisura">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Unità di misura </th>
                         <td mat-cell *matCellDef="let row">
-                            <mat-select [(ngModel)]="row.unitaMisura">
-                                <ng-container *ngFor="let um of this.unitaDiMisuraList">
-                                    <mat-option [value]="um">{{um}}</mat-option>
-                                </ng-container>
-                            </mat-select>
+                            <select [(ngModel)]="row.unitaMisura">
+                                @for (um of this.unitaDiMisuraList; track um){
+                                    <option [value]="um">{{um}}</option>
+                                }
+                            </select>
                         </td>
                     </ng-container>
 
@@ -72,7 +72,7 @@
                     <ng-container matColumnDef="quantita">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantità </th>
                         <td mat-cell *matCellDef="let row">
-                            <input type="number" [(ngModel)]="row.quantita" />
+                            <input type="number" min="1" [(ngModel)]="row.quantita" />
                         </td>
                     </ng-container>
 
@@ -80,7 +80,8 @@
                     <ng-container matColumnDef="aggiungi">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
                         <td mat-cell *matCellDef="let row">
-                            <button [disabled]="!row.unitaMisura || !row.quantita" (click)="aggiungiRigaOrdine(row)">
+                            <button class="addRigaOrdine" [disabled]="!row.unitaMisura || !row.quantita"
+                                (click)="aggiungiRigaOrdine(row)">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </td>
@@ -102,22 +103,16 @@
 </div>
 
 <!-- Prodotti selezionati -->
-<div class="row">
+<div class="row my-3">
     <div class="col-12">
         <table>
+            <thead></thead>
             <tbody>
                 <tr *ngFor="let selRow of this.selectedRigheOrdine">
-                    <td>
-                        {{selRow.prodotto.descrizione}}
-                    </td>
-                    <td>
-                        {{selRow.unitaMisura}}
-                    </td>
-                    <td>
-                        {{selRow.quantita}}
-                    </td>
-                    <td>
-                        <button (click)="rimuoviRigaOrdine(selRow)">
+                    <td class="mx-2">{{selRow.prodotto.descrizione}} {{selRow.unitaMisura}}</td>
+                    <td class="mx-2">{{selRow.quantita}}</td>
+                    <td class="mx-2">
+                        <button class="removeRigaOrdine" (click)="rimuoviRigaOrdine(selRow)">
                             <i class="fa-solid fa-minus"></i>
                         </button>
                     </td>
@@ -127,16 +122,40 @@
     </div>
 </div>
 
-<!-- Tabella SOLO per file-->
+<!-- Tabella SOLO per file
 <style>
-    .tabellaProdottiFile{
-        font-size: 5px; 
+    .tabellaProdottiFile {
+        font-size: 5px;
         width: 100%;
     }
 
-    .tabellaClientiFile{
-        font-size: 5px; 
+    .tabellaClientiFile {
+        font-size: 5px;
         width: 100%;
+    }
+
+    .tabellaProdottiFile tr {
+        width: 100%;
+        max-width: 100%;
+        border: 1px solid black;
+    }
+
+    .tabellaProdottiFile {
+        font-size: 5px;
+        width: 100%;
+    }
+
+    .tabellaProdottiFile tr {
+        width: 100%;
+        border: 1px solid black;
+    }
+
+    .tabellaProdottiFile th,
+    .tabellaProdottiFile td {
+        width: 100%;
+        max-width: 100%;
+        word-wrap: break-word;
+        border: 1px solid black;
     }
 </style>
 <div style="display: none;">
@@ -154,12 +173,14 @@
 
         <table class="tabellaProdottiFile">
             <thead>
-                <th>Note</th>
-                <th>Quantità</th>
-                <th>Codice</th>
-                <th>Descrizione</th>
-                <th>Prezzo</th>
-                <th>Prezzo totale</th>
+                <tr>
+                    <th>Note</th>
+                    <th>Quantità</th>
+                    <th>Codice</th>
+                    <th>Descrizione</th>
+                    <th>Prezzo</th>
+                    <th>Prezzo totale</th>
+                </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let selRow of this.selectedRigheOrdine">
@@ -172,12 +193,13 @@
                 </tr>
                 <tr>
                     <td colspan="5" style="text-align: end;">Totale: </td>
-                    <td style="border-top: .2px dashed black;">{{this.totaleOrdine | currency:'EUR':'symbol':'1.2-2'}}</td>
+                    <td style="border-top: .2px dashed black;">{{this.totaleOrdine | currency:'EUR':'symbol':'1.2-2'}}
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
-</div>
+</div>-->
 
 
 <div class="row my-2">

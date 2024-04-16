@@ -1,0 +1,17 @@
+.removeRigaOrdine{
+    background-color: transparent;
+    border: none;
+}
+
+.removeRigaOrdine:not([disabled]):hover{
+    color: rgb(225, 95, 95);
+}
+
+.addRigaOrdine{
+    background-color: transparent;
+    border: none;
+}
+
+.addRigaOrdine:not([disabled]):hover{
+    color: rgb(84, 219, 100);
+}

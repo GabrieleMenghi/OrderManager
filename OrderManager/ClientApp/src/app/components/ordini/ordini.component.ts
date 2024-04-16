@@ -135,19 +135,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
 
   // Ordini
   creaOrdine() {
-    // Creazione di un nuovo documento PDF
-    const doc = new jsPDF();
-
-    // Aggiunta della tabella HTML al documento
-    const element = document.getElementById('tabellaPerFile');
-    if (element) {
-      doc.html(element, {
-        callback: function (doc) {
-          // Salvataggio del documento come file PDF
-          doc.save('ordine.pdf');
-        },
-      });
-    }
+    console.log(this.selectedRigheOrdine);
   }
 }
 
