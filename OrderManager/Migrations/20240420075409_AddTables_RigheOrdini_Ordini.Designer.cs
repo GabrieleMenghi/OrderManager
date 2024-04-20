@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderManager.DB;
 
@@ -11,9 +12,11 @@ using OrderManager.DB;
 namespace OrderManager.Migrations
 {
     [DbContext(typeof(OrderManagerDBContext))]
-    partial class OrderManagerDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240420075409_AddTables_RigheOrdini_Ordini")]
+    partial class AddTables_RigheOrdini_Ordini
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

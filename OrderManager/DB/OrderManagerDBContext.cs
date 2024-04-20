@@ -9,4 +9,6 @@ public class OrderManagerDBContext : DbContext
 
     public DbSet<Prodotto> Prodotti { get; set; }
     public DbSet<Cliente> Clienti { get; set; }
+    public DbSet<RigaOrdine> RigheOrdini { get; set; }
+    public DbSet<Ordine> Ordini { get; set; }
 }
