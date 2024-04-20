@@ -7,7 +7,6 @@ import { Prodotto } from '../../models/prodotto.model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { RigaOrdine } from '../../models/rigaOrdine.model';
 import jsPDF from 'jspdf';
 
 @Component({
@@ -37,7 +36,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
   prodotti: Array<Prodotto> = [];
   unitaDiMisuraList: Array<string> = ['PZ', 'CT'];
 
-  selectedRigheOrdine: Array<RigaOrdine> = [];
+  //selectedRigheOrdine: Array<RigaOrdine> = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -98,7 +97,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
   }
 
   aggiungiRigaOrdine(row: any) {
-    var selectedProdottiCodici = this.selectedRigheOrdine.map(
+    /*var selectedProdottiCodici = this.selectedRigheOrdine.map(
       (x) => x.prodotto.codice
     );
     if (!selectedProdottiCodici.includes(row.codice)) {
@@ -114,11 +113,11 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
         0
       );
     }
-    console.log(this.totaleOrdine);
+    console.log(this.totaleOrdine);*/
   }
 
   rimuoviRigaOrdine(selRow: any) {
-    var rigaOrdineToDelete = this.selectedRigheOrdine.find(
+    /*var rigaOrdineToDelete = this.selectedRigheOrdine.find(
       (x) => x.prodotto.codice === selRow.prodotto.codice
     );
     if (rigaOrdineToDelete) {
@@ -130,12 +129,12 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
           0
         );
       }
-    }
+    }*/
   }
 
   // Ordini
   creaOrdine() {
-    console.log(this.selectedRigheOrdine);
+    //console.log(this.selectedRigheOrdine);
   }
 }
 

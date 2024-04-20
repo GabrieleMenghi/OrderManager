@@ -35,4 +35,10 @@ export class ConfigService {
     var configUrl = 'http://localhost:5006/api/clienti';
     return this.http.get(configUrl);
   }
+
+  // Ordini
+  async getOrdini() {
+    var configUrl = 'http://localhost:5006/api/ordini';
+    return this.http.get(configUrl);
+  }
 }
