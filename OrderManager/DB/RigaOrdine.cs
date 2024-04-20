@@ -27,7 +27,7 @@ public class RigaOrdine
         return new RigaOrdine(rigaOrdineId, prodottoId, unitaDiMisura, quantita);
     }
 
-    public static RigaOrdine RigaOrdineFactory(long prodottoId, string unitaDiMisura, int quantita)
+    public static RigaOrdine RigaOrdineFactoryCreate(long prodottoId, string unitaDiMisura, int quantita)
     {
         return new RigaOrdine(0, prodottoId, unitaDiMisura, quantita);
     }
