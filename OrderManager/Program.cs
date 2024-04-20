@@ -4,6 +4,8 @@ using OrderManager.Repo;
 using OrderManager.Repo.Int;
 using OrderManager.Services;
 using OrderManager.Services.Int;
+using OrderManager.SubServices;
+using OrderManager.SubServices.Int;
 using System.Text.Json;
 
 namespace OrderManager;
@@ -48,8 +50,13 @@ public class Program
         builder.Services.AddScoped<IRepositoryProdotti, SqlRepositoryProdotti>();
         builder.Services.AddScoped<IProdottiService, ProdottiService>();
         builder.Services.AddScoped<IProdottiParserService, ProdottiParserService>();
+
         builder.Services.AddScoped<IRepositoryClienti, SqlRepositoryClienti>();
         builder.Services.AddScoped<IClientiService, ClientiService>();
+
+        builder.Services.AddScoped<IRepositoryOrdini, SqlRepositoryOrdini>();
+        builder.Services.AddScoped<IOrdiniService, OrdiniService>();
+        builder.Services.AddScoped<IOrderConversionSubService, OrderConversionSubService>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
