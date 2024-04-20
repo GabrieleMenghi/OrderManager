@@ -60,7 +60,7 @@
                     <ng-container matColumnDef="unitaMisura">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Unità di misura </th>
                         <td mat-cell *matCellDef="let row">
-                            <select [(ngModel)]="row.unitaMisura">
+                            <select [(ngModel)]="row.unitaMisura" style="width: 100px;">
                                 @for (um of this.unitaDiMisuraList; track um){
                                     <option [value]="um">{{um}}</option>
                                 }
