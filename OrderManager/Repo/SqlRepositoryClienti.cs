@@ -24,4 +24,9 @@ public class SqlRepositoryClienti : IRepositoryClienti
             .Where(x => x.Nome.Contains(name))
             .ToListAsync();
     }
+
+    public async Task<Cliente> GetCliente(long clienteId)
+    {
+        return await _dbContext.Clienti.SingleOrDefaultAsync(x => x.ClienteId == clienteId);
+    }
 }

@@ -7,4 +7,6 @@ public interface IOrdiniService
 {
     Task<Ordine> AddOrderAsync(OrdineBL ordineBl);
     Task<List<OrdineBL>> GetOrdersAsync();
+    Task<string> GenerateHtmlStringFromOrder(OrdineBL ordine);
+    Task<byte[]> GeneratePdfFromHtmlString(OrdineBL ordine);
 }

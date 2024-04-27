@@ -65,4 +65,9 @@ public class SqlRepositoryProdotti : IRepositoryProdotti
             return oldProdotto;
         }
     }
+
+    public async Task<Prodotto> GetProdotto(long prodottoId)
+    {
+        return await _dbContext.Prodotti.SingleOrDefaultAsync(x => x.ProdottoId == prodottoId);
+    }
 }

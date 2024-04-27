@@ -2,6 +2,7 @@
 using OrderManager.Models;
 using OrderManager.Models.Requests.Api;
 using OrderManager.Services.Int;
+using SelectPdf;
 
 namespace OrderManager.Controllers;
 
@@ -23,8 +24,21 @@ public class OrdiniController : ControllerBase
     }
 
     [HttpPost("AddOrder")]
-    public async Task AddOrderAsync([FromBody] AddOrderApiRequest request)
+    public async Task<IActionResult> AddOrderAsync([FromBody] AddOrderApiRequest request)
     {
-        await _ordiniService.AddOrderAsync(request.Ordine);
+        // Salvataggio su db
+        //await _ordiniService.AddOrderAsync(request.Ordine);
+
+        // Creazione pdf
+        //await _ordiniService.GeneratePdfFromHtml();
+        try
+        {
+            var pdfFile = await _ordiniService.GeneratePdfFromHtmlString(request.Ordine);
+            return File(pdfFile, "application/pdf", "Prova.pdf");
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

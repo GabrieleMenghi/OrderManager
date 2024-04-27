@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AddOrderRequest } from '../models/requests/addOrdini.request';
+import { finalize } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -44,7 +45,7 @@ export class ConfigService {
     return this.http.get(configUrl);
   }
 
-  async aggiungiOrdine(request: AddOrderRequest) {
+  /*async aggiungiOrdine(request: AddOrderRequest) {
     try {
       var configUrl = this.apiAddress + 'ordini/AddOrder';
       return await this.http.post<any>(configUrl, request).subscribe({
@@ -55,6 +56,50 @@ export class ConfigService {
           throw error;
         },
       });
+    } catch (error) {
+      throw error;
+    }
+  }*/
+
+  async aggiungiOrdine(request: AddOrderRequest) {
+    try {
+      var configUrl = this.apiAddress + 'ordini/AddOrder';
+      this.http.post(configUrl, request, { responseType: 'blob' })
+        .pipe(
+          finalize(() => {
+            // Cleanup
+          })
+        )
+        .subscribe({
+          next: (response: Blob) => {
+            if (response) {
+              // Creazione di un oggetto Blob dal tipo di risposta ricevuto (blob)
+              const blob = new Blob([response], { type: 'application/pdf' });
+  
+              // Creazione di un oggetto URL dal blob
+              const url = window.URL.createObjectURL(blob);
+  
+              // Creazione di un link temporaneo per il download del file
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = 'Prova.pdf';
+              
+              // Aggiunta del link alla pagina e click su di esso per avviare il download
+              document.body.appendChild(link);
+              link.click();
+  
+              // Rimozione del link dalla pagina dopo il download
+              document.body.removeChild(link);
+            } else {
+              // Se la risposta è undefined, gestisci l'errore
+              throw new Error('La risposta dal server è vuota.');
+            }
+          },
+          error: (error) => {
+            // Gestisci gli errori
+            throw error;
+          }
+        });
     } catch (error) {
       throw error;
     }

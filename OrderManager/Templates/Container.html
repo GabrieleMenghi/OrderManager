@@ -1,0 +1,67 @@
+﻿<html>
+<head>
+    <style>
+        .tabellaProdotti{
+            width: 100%;
+            border: 1px solid black;
+        }
+        .tabellaProdotti th {
+            font-size: x-large;
+            border-bottom: 1px solid black;
+        }
+        .tabellaProdotti td{
+            font-size: x-large;
+            border-bottom: 1px dashed black;
+        }
+        .tabellaProdotti td:not(:last-child) {
+            border-right: 1px solid black;
+        }
+        .tabellaProdotti .colonnaNote{
+            width: 10%
+        }
+        .tabellaCliente {
+            width: 100%;
+            border: 1px solid black;
+            font-size: x-large;
+        }
+        .tabellaCliente td{
+            border: 1px solid black;
+        }
+        .note{
+            width: 100%;
+            border: 1px solid black;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    <!--<h1>[[CLIENTE]]</h1>
+    <h2>[[FAREFATTURA]]</h2>
+    <h2>[[DATA]]</h2>-->
+
+    <table class="tabellaCliente">
+        <tr>
+            <td style="text-align: center;">[[DATA]]</td>
+            <td rowspan="2" style="text-align: center;">[[CODICECLIENTE]] - [[CLIENTE]]</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">[[FAREFATTURA]]</td>
+        </tr>
+    </table>
+
+    <table class="tabellaProdotti">
+        <thead>
+            <tr>
+                <th class="colonnaNote"></th>
+                <th>Quantità</th>
+                <th>Codice</th>
+                <th>Prodotto</th>
+            </tr>
+        </thead>
+        <tbody>
+            [[RIGHETABELLAPRODOTTI]]
+        </tbody>
+    </table>
+    <div class="note">Note: [[NOTE]]</div>
+</body>
+</html>
