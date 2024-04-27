@@ -5,7 +5,7 @@ namespace OrderManager.Models;
 public class OrdineBL
 {
     public long OrdineId { get; set; }
-    public DateTime DataCreazione { get; set; }
+    public string DataCreazione { get; set; }
     public long ClienteId { get; set; }
     public bool FareFattura { get; set; }
     public List<RigaOrdineBL> RigheOrdine { get; set; }
@@ -16,7 +16,7 @@ public class OrdineBL
 
     }
 
-    public OrdineBL(long ordineId, DateTime dataCreazione, long clienteId, bool fareFattura, List<RigaOrdineBL> righeOrdine, string note)
+    public OrdineBL(long ordineId, string dataCreazione, long clienteId, bool fareFattura, List<RigaOrdineBL> righeOrdine, string note)
     {
         OrdineId = ordineId;
         DataCreazione = dataCreazione;
@@ -26,12 +26,12 @@ public class OrdineBL
         Note = note;
     }
 
-    public static OrdineBL OrdineBLFactory(long ordineId, DateTime dataCreazione, long clienteId, bool fareFattura, List<RigaOrdineBL> righeOrdine, string note)
+    public static OrdineBL OrdineBLFactory(long ordineId, string dataCreazione, long clienteId, bool fareFattura, List<RigaOrdineBL> righeOrdine, string note)
     {
         return new OrdineBL(ordineId, dataCreazione, clienteId, fareFattura, righeOrdine, note);
     }
 
-    public static OrdineBL OrdineBLFactoryCreate(DateTime dataCreazione, long clienteId, bool fareFattura, List<RigaOrdineBL> righeOrdine, string note)
+    public static OrdineBL OrdineBLFactoryCreate(string dataCreazione, long clienteId, bool fareFattura, List<RigaOrdineBL> righeOrdine, string note)
     {
         return new OrdineBL(0, dataCreazione, clienteId, fareFattura, righeOrdine, note);
     }

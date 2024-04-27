@@ -7,7 +7,9 @@ import { Prodotto } from '../../models/prodotto.model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import jsPDF from 'jspdf';
+import { ProdottoSelezionatoPerOrdine } from '../../models/prodottoSelezionatoPerOrdine.model';
+import { AddOrderRequest } from '../../models/requests/addOrdini.request';
+import { Ordine, RigaOrdine } from '../../models/ordine.model';
 
 @Component({
   selector: 'app-ordini',
@@ -36,7 +38,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
   prodotti: Array<Prodotto> = [];
   unitaDiMisuraList: Array<string> = ['PZ', 'CT'];
 
-  //selectedRigheOrdine: Array<RigaOrdine> = [];
+  selectedProdottiPerOrdine: Array<ProdottoSelezionatoPerOrdine> = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -97,44 +99,56 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
   }
 
   aggiungiRigaOrdine(row: any) {
-    /*var selectedProdottiCodici = this.selectedRigheOrdine.map(
+    var selectedProdottiCodici = this.selectedProdottiPerOrdine.map(
       (x) => x.prodotto.codice
     );
     if (!selectedProdottiCodici.includes(row.codice)) {
-      var prodotto = new Prodotto(row.codice, row.descrizione, row.prezzo);
-      var rigaOrdineToAdd = RigaOrdine.RigaOrdineFactory(
-        prodotto,
-        row.unitaMisura,
-        row.quantita
-      );
-      this.selectedRigheOrdine.push(rigaOrdineToAdd);
-      this.totaleOrdine = this.selectedRigheOrdine.reduce(
-        (sum, current) => sum + (current.prodotto.prezzo * current.quantita),
+      var prodottoId = this.getProdottoIdByCodice(row.codice)
+      var prodotto = new Prodotto(prodottoId, row.codice, row.descrizione, row.prezzo);
+      var rigaOrdineToAdd =
+        ProdottoSelezionatoPerOrdine.ProdottoSelezionatoPerOrdineFactory(
+          prodotto,
+          row.unitaMisura,
+          row.quantita
+        );
+      this.selectedProdottiPerOrdine.push(rigaOrdineToAdd);
+      this.totaleOrdine = this.selectedProdottiPerOrdine.reduce(
+        (sum, current) => sum + current.prodotto.prezzo * current.quantita,
         0
       );
     }
-    console.log(this.totaleOrdine);*/
   }
 
   rimuoviRigaOrdine(selRow: any) {
-    /*var rigaOrdineToDelete = this.selectedRigheOrdine.find(
-      (x) => x.prodotto.codice === selRow.prodotto.codice
-    );
+    var rigaOrdineToDelete = this.selectedProdottiPerOrdine.find((x) => x.prodotto.codice === selRow.prodotto.codice);
     if (rigaOrdineToDelete) {
-      const index = this.selectedRigheOrdine.indexOf(rigaOrdineToDelete, 0);
+      const index = this.selectedProdottiPerOrdine.indexOf(rigaOrdineToDelete, 0);
       if (index > -1) {
-        this.selectedRigheOrdine.splice(index, 1);
-        this.totaleOrdine = this.selectedRigheOrdine.reduce(
-          (sum, current) => sum + (current.prodotto.prezzo * current.quantita),
+        this.selectedProdottiPerOrdine.splice(index, 1);
+        this.totaleOrdine = this.selectedProdottiPerOrdine.reduce(
+          (sum, current) => sum + current.prodotto.prezzo * current.quantita,
           0
         );
       }
-    }*/
+    }
   }
 
   // Ordini
-  creaOrdine() {
-    //console.log(this.selectedRigheOrdine);
+  async creaOrdine() {
+    var dateNow = new Date();
+    const dateNowString = dateNow.toLocaleString('it-IT');
+    var clienteSelected = this.clienti.filter(x => x.nome === this.clientsControl.value)[0];
+    var righeOrdine = this.selectedProdottiPerOrdine.map(x => RigaOrdine.RigaOrdineFactoryCreate(x.prodotto.prodottoId, x.unitaMisura, x.quantita));
+    var ordine = Ordine.OrdineFactoryCreate(dateNowString, clienteSelected.clienteId, this.fareFattura, righeOrdine, "");
+    var addOrderRequest: AddOrderRequest = new AddOrderRequest(ordine);
+    console.log(this.selectedProdottiPerOrdine);
+
+    await this.configService.aggiungiOrdine(addOrderRequest);
+  }
+
+  getProdottoIdByCodice(codice: string): number{
+    var prodotto = this.prodotti.filter(x => x.codice === codice)[0];
+    return prodotto.prodottoId;
   }
 }
 

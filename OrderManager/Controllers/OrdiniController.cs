@@ -22,9 +22,9 @@ public class OrdiniController : ControllerBase
         return await _ordiniService.GetOrdersAsync();
     }
 
-    [HttpPost]
-    public async Task GetOrdiniAsync(GetOrdiniApiRequest request)
+    [HttpPost("AddOrder")]
+    public async Task AddOrderAsync([FromBody] AddOrderApiRequest request)
     {
-        await _ordiniService.AddOrderAsync(request.Ordine, request.RigheOrdine);
+        await _ordiniService.AddOrderAsync(request.Ordine);
     }
 }

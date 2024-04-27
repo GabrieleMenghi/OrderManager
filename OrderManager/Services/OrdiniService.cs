@@ -28,9 +28,9 @@ public class OrdiniService : IOrdiniService
         return ordiniBl;
     }
 
-    public async Task<Ordine> AddOrderAsync(OrdineBL ordineBl, List<RigaOrdineBL> righe)
+    public async Task<Ordine> AddOrderAsync(OrdineBL ordineBl)
     {
-        Ordine ordine = _conversionSubService.ConvertToOrdine(ordineBl, righe);
+        Ordine ordine = _conversionSubService.ConvertToOrdine(ordineBl);
         await _ordiniRepo.AddOrder(ordine);
 
         return ordine;

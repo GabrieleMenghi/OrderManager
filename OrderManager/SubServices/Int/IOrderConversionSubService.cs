@@ -6,5 +6,5 @@ namespace OrderManager.SubServices.Int;
 public interface IOrderConversionSubService
 {
     OrdineBL ConvertToOrdineBLWithRigheOrdineBL(Ordine ordine);
-    Ordine ConvertToOrdine(OrdineBL ordine, List<RigaOrdineBL> righe);
+    Ordine ConvertToOrdine(OrdineBL ordine);
 }

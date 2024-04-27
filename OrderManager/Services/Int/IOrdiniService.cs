@@ -5,6 +5,6 @@ namespace OrderManager.Services.Int;
 
 public interface IOrdiniService
 {
-    Task<Ordine> AddOrderAsync(OrdineBL ordineBl, List<RigaOrdineBL> righe);
+    Task<Ordine> AddOrderAsync(OrdineBL ordineBl);
     Task<List<OrdineBL>> GetOrdersAsync();
 }

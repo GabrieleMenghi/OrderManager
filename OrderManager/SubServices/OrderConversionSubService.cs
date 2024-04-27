@@ -14,18 +14,18 @@ public class OrderConversionSubService : IOrderConversionSubService
             .Select(x => RigaOrdineBL.RigaOrdineBLFactory(x.RigaOrdineId, x.ProdottoId, x.UnitaDiMisura, x.Quantita))
             .ToList());
 
-        var ordineBl = OrdineBL.OrdineBLFactory(ordine.OrdineId, ordine.DataCreazione, ordine.ClienteId, ordine.FareFattura, righeOrdine, ordine.Note);
+        var ordineBl = OrdineBL.OrdineBLFactory(ordine.OrdineId, ordine.DataCreazione.ToString(), ordine.ClienteId, ordine.FareFattura, righeOrdine, ordine.Note);
 
         return ordineBl;
     }
 
-    public Ordine ConvertToOrdine(OrdineBL ordine, List<RigaOrdineBL> righe)
+    public Ordine ConvertToOrdine(OrdineBL ordine)
     {
-        List<RigaOrdine> sqlRighe = righe
+        List<RigaOrdine> sqlRighe = ordine.RigheOrdine
             .Select(x => RigaOrdine.RigaOrdineFactoryCreate(x.ProdottoId, x.UnitaDiMisura, x.Quantita))
             .ToList();
 
-        Ordine sqlOrdine = Ordine.OrdineFactoryCreate(ordine.DataCreazione, ordine.ClienteId, ordine.FareFattura, ordine.Note);
+        Ordine sqlOrdine = Ordine.OrdineFactoryCreate(DateTime.Parse(ordine.DataCreazione), ordine.ClienteId, ordine.FareFattura, ordine.Note);
 
         sqlOrdine.RigheOrdine = sqlRighe;
 

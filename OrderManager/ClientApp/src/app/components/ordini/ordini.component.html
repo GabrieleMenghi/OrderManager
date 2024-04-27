@@ -62,7 +62,7 @@
                         <td mat-cell *matCellDef="let row">
                             <select [(ngModel)]="row.unitaMisura" style="width: 100px;">
                                 @for (um of this.unitaDiMisuraList; track um){
-                                    <option [value]="um">{{um}}</option>
+                                <option [value]="um">{{um}}</option>
                                 }
                             </select>
                         </td>
@@ -108,7 +108,7 @@
         <table>
             <thead></thead>
             <tbody>
-                <!--<tr *ngFor="let selRow of this.selectedRigheOrdine">
+                <tr *ngFor="let selRow of this.selectedProdottiPerOrdine">
                     <td class="mx-2">{{selRow.prodotto.descrizione}} {{selRow.unitaMisura}}</td>
                     <td class="mx-2">{{selRow.quantita}}</td>
                     <td class="mx-2">
@@ -116,7 +116,7 @@
                             <i class="fa-solid fa-minus"></i>
                         </button>
                     </td>
-                </tr>-->
+                </tr>
             </tbody>
         </table>
     </div>
@@ -201,9 +201,10 @@
     </div>
 </div>-->
 
-
-<div class="row my-2">
-    <div class="col-12">
-        <button mat-stroked-button [disabled]="!clientsControl.valid" (click)="creaOrdine()">Crea ordine</button>
+<div class="fixed-button-container">
+    <div class="row my-2">
+        <div class="col-12">
+            <button mat-stroked-button [disabled]="!clientsControl.valid" (click)="creaOrdine()">Crea ordine</button>
+        </div>
     </div>
 </div>
