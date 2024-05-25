@@ -1,45 +1,53 @@
 ﻿<html>
 <head>
     <style>
-        .tabellaProdotti{
+        .tabellaProdotti {
             width: 100%;
             border: 1px solid black;
         }
+
         .tabellaProdotti th {
             font-size: x-large;
             border-bottom: 1px solid black;
         }
-        .tabellaProdotti td{
+
+        .tabellaProdotti td {
             font-size: x-large;
             border-bottom: 1px dashed black;
         }
+
         .tabellaProdotti td:not(:last-child) {
             border-right: 1px solid black;
         }
-        .tabellaProdotti .colonnaNote{
+
+        .tabellaProdotti .colonnaNote {
             width: 10%
         }
-        .tabellaCliente {
+
+        /*.tabellaCliente {
             width: 100%;
             border: 1px solid black;
             font-size: x-large;
+            margin-bottom: 5%;
         }
-        .tabellaCliente td{
-            border: 1px solid black;
-        }
-        .note{
+
+            .tabellaCliente td {
+                border: 1px solid black;
+            }*/
+
+        .note {
             width: 100%;
             border: 1px solid black;
             font-size: large;
         }
+        .tabellaClient table tr td{
+            padding-bottom: 130px;
+            /*border: 1px solid green;*/
+        }
     </style>
 </head>
 <body>
-    <!--<h1>[[CLIENTE]]</h1>
-    <h2>[[FAREFATTURA]]</h2>
-    <h2>[[DATA]]</h2>-->
-
-    <table class="tabellaCliente">
+    <!--<table class="tabellaCliente">
         <tr>
             <td style="text-align: center;">[[DATA]]</td>
             <td rowspan="2" style="text-align: center;">[[CODICECLIENTE]] - [[CLIENTE]]</td>
@@ -47,12 +55,27 @@
         <tr>
             <td style="text-align: center;">[[FAREFATTURA]]</td>
         </tr>
+    </table>-->
+    <table class="tabellaClient" style="font-size: x-large; font-weight: bold; margin-bottom: 5%; ">
+        <thead><tr><th></th></tr></thead>
+        <tbody>
+            <tr>
+                <td>[[CLIENTE]] - Codice [[CODICECLIENTE]]</td>
+            </tr>
+            <tr>
+                <td>Ordine n. [[IDORDINE]] del [[DATA]]</td>
+            </tr>
+            <tr>
+                <td>[[FAREFATTURA]]</td>
+            </tr>
+        </tbody>
     </table>
 
     <table class="tabellaProdotti">
         <thead>
             <tr>
                 <th class="colonnaNote"></th>
+                <th>Tipo</th>
                 <th>Quantità</th>
                 <th>Codice</th>
                 <th>Prodotto</th>

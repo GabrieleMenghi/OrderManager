@@ -27,10 +27,9 @@ public class OrdiniController : ControllerBase
     public async Task<IActionResult> AddOrderAsync([FromBody] AddOrderApiRequest request)
     {
         // Salvataggio su db
-        //await _ordiniService.AddOrderAsync(request.Ordine);
+        await _ordiniService.AddOrderAsync(request.Ordine);
 
         // Creazione pdf
-        //await _ordiniService.GeneratePdfFromHtml();
         try
         {
             var pdfFile = await _ordiniService.GeneratePdfFromHtmlString(request.Ordine);

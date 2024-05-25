@@ -54,8 +54,9 @@ public class OrdiniService : IOrdiniService
         // Sostituzioni
         htmlString = htmlString.Replace("[[CODICECLIENTE]]", sqlCliente.CodiceCliente);
         htmlString = htmlString.Replace("[[CLIENTE]]", sqlCliente.Nome);
+        htmlString = htmlString.Replace("[[IDORDINE]]", ordine.OrdineId.ToString());
         htmlString = htmlString.Replace("[[DATA]]", DateTime.Parse(ordine.DataCreazione).ToString("dd/MM/yyyy"));
-        htmlString = htmlString.Replace("[[FAREFATTURA]]", ordine.FareFattura ? "F.F" : string.Empty);
+        htmlString = htmlString.Replace("[[FAREFATTURA]]", ordine.FareFattura ? "F.F." : string.Empty);
 
         string prodottiString = string.Empty;
         foreach (var prodotto in ordine.RigheOrdine)
@@ -65,7 +66,8 @@ public class OrdiniService : IOrdiniService
             string rigaHtmlString = File.ReadAllText(rigaFilePath);
 
             rigaHtmlString = rigaHtmlString.Replace("[[NOTE]]", string.Empty);
-            rigaHtmlString = rigaHtmlString.Replace("[[QUANTITA]]", $"{prodotto.UnitaDiMisura}. {prodotto.Quantita}");
+            rigaHtmlString = rigaHtmlString.Replace("[[UNITAMISURA]]", prodotto.UnitaDiMisura);
+            rigaHtmlString = rigaHtmlString.Replace("[[QUANTITA]]", prodotto.Quantita.ToString());
             rigaHtmlString = rigaHtmlString.Replace("[[CODICE]]", sqlProdotto.Codice);
             rigaHtmlString = rigaHtmlString.Replace("[[PRODOTTO]]", sqlProdotto.Descrizione);
 
