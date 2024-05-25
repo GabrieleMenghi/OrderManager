@@ -1,9 +1,22 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Prodotto } from '../../models/prodotto.model';
 import { ConfigService } from '../../config/config.service';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { ModaleModificaProdottoComponent } from '../modali/modale-modifica-prodotto/modale-modifica-prodotto.component';
 
 @Component({
   selector: 'app-prodotti',
@@ -11,7 +24,7 @@ import { ConfigService } from '../../config/config.service';
   templateUrl: './prodotti.component.html',
 })
 export class ProdottiComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['codice', 'descrizione', 'prezzo'];
+  displayedColumns: string[] = ['codice', 'descrizione', 'prezzo', 'modifica'];
   dataSource: MatTableDataSource<Prodotto>;
   prodotti: Array<Prodotto> = [];
 
@@ -25,7 +38,7 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
     });
   }
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService, private dialog: MatDialog) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.prodotti);
   }
@@ -42,5 +55,20 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openDialogModify(row: any) {
+    const dialogRef = this.dialog.open(ModaleModificaProdottoComponent, {
+      data: {
+        prodottoId: 0,
+        codice: row.codice,
+        descrizione: row.descrizione,
+        prezzo: row.prezzo,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result)
+        console.log('The dialog was closed codice: ' + result.codice + ' desc: ' + result.descrizione + ' prezzo: ' + result.prezzo);
+    });
   }
 }

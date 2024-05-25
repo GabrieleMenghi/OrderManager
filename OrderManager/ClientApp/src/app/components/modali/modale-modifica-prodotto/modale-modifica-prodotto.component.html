@@ -1,0 +1,21 @@
+<mat-dialog-content [formGroup]="form">
+    <div><mat-form-field [style.width.px]=400>
+        <mat-label>Codice</mat-label>
+        <input type="text" matInput formControlName="codice">
+    </mat-form-field></div>
+
+    <div><mat-form-field [style.width.px]=400>
+        <mat-label>Descrizione</mat-label>
+        <input type="text" matInput formControlName="descrizione">
+    </mat-form-field></div>
+
+    <div><mat-form-field [style.width.px]=400>
+        <mat-label>Prezzo</mat-label>
+        <input type="number" matInput formControlName="prezzo">
+    </mat-form-field></div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button class="mat-raised-button me-2" (click)="close()">Chiudi</button>
+    <button mat-button class="mat-raised-button mat-primary" (click)="save()">Salva</button>
+</mat-dialog-actions>

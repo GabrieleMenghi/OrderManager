@@ -18,9 +18,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ClientiComponent } from './components/clienti/clienti.component';
 import { OrdiniComponent } from './components/ordini/ordini.component';
 import { StoricoOrdiniComponent } from './components/storico-ordini/storico-ordini.component';
+import { ModaleModificaProdottoComponent } from './components/modali/modale-modifica-prodotto/modale-modifica-prodotto.component';
 
 @NgModule({
-  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent, OrdiniComponent, StoricoOrdiniComponent],
+  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent, OrdiniComponent, StoricoOrdiniComponent, ModaleModificaProdottoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

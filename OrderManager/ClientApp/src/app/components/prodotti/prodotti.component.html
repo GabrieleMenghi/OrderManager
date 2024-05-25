@@ -29,6 +29,12 @@
         <td mat-cell *matCellDef="let row"> {{row.prezzo | currency:'EUR':'symbol':'1.2-2'}} </td>
       </ng-container>
 
+      <!-- Modifica -->
+      <ng-container matColumnDef="modifica">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let row"><button (click)="openDialogModify(row)"> <i class="fa-solid fa-pen-to-square"></i></button> </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
@@ -39,5 +45,15 @@
     </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleziona pagina dei prodotti"></mat-paginator>
+  </div>
+</div>
+
+<div class="fixed-button-container">
+  <div class="row my-4 text-end">
+    <div class="col-12">
+      <button mat-fab color="primary" routerLink="">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
   </div>
 </div>
