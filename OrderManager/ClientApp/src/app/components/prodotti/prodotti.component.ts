@@ -17,6 +17,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { ModaleModificaProdottoComponent } from '../modali/modale-modifica-prodotto/modale-modifica-prodotto.component';
+import { ModaleEliminaProdottoComponent } from '../modali/modale-elimina-prodotto/modale-elimina-prodotto.component';
 
 @Component({
   selector: 'app-prodotti',
@@ -24,7 +25,7 @@ import { ModaleModificaProdottoComponent } from '../modali/modale-modifica-prodo
   templateUrl: './prodotti.component.html',
 })
 export class ProdottiComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['codice', 'descrizione', 'prezzo', 'modifica'];
+  displayedColumns: string[] = ['codice', 'descrizione', 'prezzo', 'modifica', 'elimina'];
   dataSource: MatTableDataSource<Prodotto>;
   prodotti: Array<Prodotto> = [];
 
@@ -68,7 +69,22 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if(result)
-        console.log('The dialog was closed codice: ' + result.codice + ' desc: ' + result.descrizione + ' prezzo: ' + result.prezzo);
+        console.log('Prodotto modificato con successo codice: ' + result.codice + ' desc: ' + result.descrizione + ' prezzo: ' + result.prezzo);
+    });
+  }
+
+  openDialogDelete(row: any) {
+    const dialogRef = this.dialog.open(ModaleEliminaProdottoComponent, {
+      data: {
+        prodottoId: 0,
+        codice: row.codice,
+        descrizione: row.descrizione,
+        prezzo: row.prezzo,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result)
+        console.log('Prodotto eliminato con successo');
     });
   }
 }

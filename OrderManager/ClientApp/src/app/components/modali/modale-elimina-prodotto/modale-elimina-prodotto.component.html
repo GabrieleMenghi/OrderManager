@@ -1,0 +1,11 @@
+<mat-dialog-content>
+    <h1 class="mb-3" style="font-size: x-large; font-weight: bold;">Si conferma di voler eliminare il seguente prodotto?</h1>
+    <p>Codice: {{data.codice}}</p>
+    <p>Descrizione: {{data.descrizione}}</p>
+    <p>Prezzo: {{data.prezzo}}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button class="mat-raised-button me-2" (click)="close()">Annulla</button>
+    <button mat-button class="mat-raised-button mat-primary" (click)="conferma()">Conferma</button>
+</mat-dialog-actions>

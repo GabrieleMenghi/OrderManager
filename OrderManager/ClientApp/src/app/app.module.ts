@@ -19,9 +19,10 @@ import { ClientiComponent } from './components/clienti/clienti.component';
 import { OrdiniComponent } from './components/ordini/ordini.component';
 import { StoricoOrdiniComponent } from './components/storico-ordini/storico-ordini.component';
 import { ModaleModificaProdottoComponent } from './components/modali/modale-modifica-prodotto/modale-modifica-prodotto.component';
+import { ModaleEliminaProdottoComponent } from './components/modali/modale-elimina-prodotto/modale-elimina-prodotto.component';
 
 @NgModule({
-  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent, OrdiniComponent, StoricoOrdiniComponent, ModaleModificaProdottoComponent],
+  declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent, OrdiniComponent, StoricoOrdiniComponent, ModaleModificaProdottoComponent, ModaleEliminaProdottoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
