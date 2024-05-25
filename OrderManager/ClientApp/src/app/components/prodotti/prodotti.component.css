@@ -1,3 +1,17 @@
 th{
     font-size: large;
 }
+
+.bottoneModificaProdotto{
+    border: 0px;
+    background-color: transparent;
+    font-size: large;
+    color: rgb(56, 56, 239);
+}
+
+.bottoneEliminaProdotto{
+    border: 0px;
+    background-color: transparent;
+    font-size: large;
+    color: red;
+}

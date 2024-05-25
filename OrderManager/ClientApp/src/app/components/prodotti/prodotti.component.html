@@ -32,13 +32,13 @@
       <!-- Modifica -->
       <ng-container matColumnDef="modifica">
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let row"><button (click)="openDialogModify(row)"> <i class="fa-solid fa-pen-to-square"></i></button> </td>
+        <td mat-cell *matCellDef="let row"><button (click)="openDialogModify(row)" class="bottoneModificaProdotto"> <i class="fa-solid fa-pen-to-square"></i></button> </td>
       </ng-container>
 
       <!-- Elimina -->
       <ng-container matColumnDef="elimina">
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let row"><button (click)="openDialogDelete(row)"> <i class="fa-solid fa-trash"></i></button> </td>
+        <td mat-cell *matCellDef="let row"><button (click)="openDialogDelete(row)" class="bottoneEliminaProdotto"> <i class="fa-solid fa-trash"></i></button> </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
