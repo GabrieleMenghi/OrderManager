@@ -75,17 +75,16 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        await this.configService.modificaProdotto(result).subscribe((updatedProduct) => {
-          // Trova l'indice dell'elemento modificato
-          const index = this.prodotti.findIndex(
-            (p) => p.prodottoId === updatedProduct.prodottoId
-          );
+        try {
+          const updatedProduct = await this.configService.modificaProdotto(result);
+          const index = this.prodotti.findIndex(p => p.prodottoId === updatedProduct.prodottoId);
           if (index !== -1) {
-            // Aggiorna l'elemento nella lista
             this.prodotti[index] = updatedProduct;
             this.dataSource.data = [...this.prodotti];
           }
-        });
+        } catch (error) {
+          console.error('Errore durante la modifica del prodotto', error);
+        }
       }
     });
   }
@@ -103,10 +102,4 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
       if (result) console.log('Prodotto eliminato con successo');
     });
   }
-
-  // async loadProducts() {
-  //   await this.configService.getProdotti().subscribe((data) => {
-  //     this.prodotti = data;
-  //   });
-  // }
 }
