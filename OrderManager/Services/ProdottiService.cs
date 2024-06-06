@@ -28,4 +28,14 @@ public class ProdottiService : IProdottiService
         }
         return upsertedProdotti;
     }
+
+    public async Task<Prodotto> UpdateProdottoAsync(Prodotto prodotto)
+    {
+        return await _prodottiRepo.UpdateProdottoAsync(prodotto);
+    }
+
+    public async Task DeleteProdottoAsync(Prodotto prodotto)
+    {
+        await _prodottiRepo.DeleteProdottoAsync(prodotto);
+    }
 }

@@ -10,4 +10,6 @@ public interface IRepositoryProdotti
     Task<Prodotto> AddProdotto(Prodotto prodotto);
     Task<Prodotto> UpsertProdotto(Prodotto prodotto);
     Task<Prodotto> GetProdotto(long prodottoId);
+    Task<Prodotto> UpdateProdottoAsync(Prodotto prodotto);
+    Task DeleteProdottoAsync(Prodotto prodotto);
 }

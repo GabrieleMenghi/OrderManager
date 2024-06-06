@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AddOrderRequest } from '../models/requests/addOrdini.request';
-import { finalize } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
+import { Prodotto } from '../models/prodotto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +65,8 @@ export class ConfigService {
   async aggiungiOrdine(request: AddOrderRequest) {
     try {
       var configUrl = this.apiAddress + 'ordini/AddOrder';
-      this.http.post(configUrl, request, { responseType: 'blob' })
+      this.http
+        .post(configUrl, request, { responseType: 'blob' })
         .pipe(
           finalize(() => {
             // Cleanup
@@ -75,19 +77,19 @@ export class ConfigService {
             if (response) {
               // Creazione di un oggetto Blob dal tipo di risposta ricevuto (blob)
               const blob = new Blob([response], { type: 'application/pdf' });
-  
+
               // Creazione di un oggetto URL dal blob
               const url = window.URL.createObjectURL(blob);
-  
+
               // Creazione di un link temporaneo per il download del file
               const link = document.createElement('a');
               link.href = url;
               link.download = 'Prova.pdf';
-              
+
               // Aggiunta del link alla pagina e click su di esso per avviare il download
               document.body.appendChild(link);
               link.click();
-  
+
               // Rimozione del link dalla pagina dopo il download
               document.body.removeChild(link);
             } else {
@@ -98,10 +100,29 @@ export class ConfigService {
           error: (error) => {
             // Gestisci gli errori
             throw error;
-          }
+          },
         });
     } catch (error) {
       throw error;
     }
+  }
+
+  // async modificaProdotto(prodotto: Prodotto) {
+  //   try {
+  //     var configUrl = this.apiAddress + 'prodotti/ModificaProdotto';
+  //     await this.http.post<any>(configUrl, prodotto).subscribe({
+  //       next: () => {},
+  //       error: (error) => {
+  //         throw error;
+  //       },
+  //     });
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+
+  modificaProdotto(prodotto: Prodotto): Observable<Prodotto> {
+    var configUrl = this.apiAddress + 'prodotti/ModificaProdotto';
+    return this.http.post<Prodotto>(configUrl, prodotto);
   }
 }

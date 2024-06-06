@@ -9,3 +9,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     right: 20px; /* distanza dal lato destro dello schermo */
     z-index: 9999; /* assicura che il bottone sia sopra tutto il resto */
 }
+
+.fixed-button-container button{
+    background-color: teal;
+}

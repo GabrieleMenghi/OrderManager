@@ -70,4 +70,23 @@ public class SqlRepositoryProdotti : IRepositoryProdotti
     {
         return await _dbContext.Prodotti.SingleOrDefaultAsync(x => x.ProdottoId == prodottoId);
     }
+
+    public async Task<Prodotto> UpdateProdottoAsync(Prodotto prodotto)
+    {
+        var oldProdotto = await _dbContext.Prodotti.SingleOrDefaultAsync(x => x.Codice == prodotto.Codice);
+
+        oldProdotto.Descrizione = prodotto.Descrizione;
+        oldProdotto.Prezzo = prodotto.Prezzo;
+        await _dbContext.SaveChangesAsync();
+
+        return oldProdotto;
+    }
+
+    public async Task DeleteProdottoAsync(Prodotto prodotto)
+    {
+        var prodottoToDelete = await _dbContext.Prodotti.SingleOrDefaultAsync(x => x.Codice == prodotto.Codice);
+
+        _dbContext.Prodotti.Remove(prodottoToDelete);
+        await _dbContext.SaveChangesAsync();
+    }
 }

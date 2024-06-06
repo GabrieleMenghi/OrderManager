@@ -25,7 +25,13 @@ import { ModaleEliminaProdottoComponent } from '../modali/modale-elimina-prodott
   templateUrl: './prodotti.component.html',
 })
 export class ProdottiComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['codice', 'descrizione', 'prezzo', 'modifica', 'elimina'];
+  displayedColumns: string[] = [
+    'codice',
+    'descrizione',
+    'prezzo',
+    'modifica',
+    'elimina',
+  ];
   dataSource: MatTableDataSource<Prodotto>;
   prodotti: Array<Prodotto> = [];
 
@@ -58,7 +64,7 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
     }
   }
 
-  openDialogModify(row: any) {
+  async openDialogModify(row: any) {
     const dialogRef = this.dialog.open(ModaleModificaProdottoComponent, {
       data: {
         prodottoId: 0,
@@ -67,9 +73,20 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
         prezzo: row.prezzo,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {
-      if(result)
-        console.log('Prodotto modificato con successo codice: ' + result.codice + ' desc: ' + result.descrizione + ' prezzo: ' + result.prezzo);
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        await this.configService.modificaProdotto(result).subscribe((updatedProduct) => {
+          // Trova l'indice dell'elemento modificato
+          const index = this.prodotti.findIndex(
+            (p) => p.prodottoId === updatedProduct.prodottoId
+          );
+          if (index !== -1) {
+            // Aggiorna l'elemento nella lista
+            this.prodotti[index] = updatedProduct;
+            this.dataSource.data = [...this.prodotti];
+          }
+        });
+      }
     });
   }
 
@@ -83,8 +100,13 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if(result)
-        console.log('Prodotto eliminato con successo');
+      if (result) console.log('Prodotto eliminato con successo');
     });
   }
+
+  // async loadProducts() {
+  //   await this.configService.getProdotti().subscribe((data) => {
+  //     this.prodotti = data;
+  //   });
+  // }
 }

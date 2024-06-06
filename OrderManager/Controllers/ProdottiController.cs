@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OrderManager.DB;
 using OrderManager.Models.Requests.Api;
 using OrderManager.Services.Int;
 
@@ -54,5 +55,17 @@ public class ProdottiController : ControllerBase
             var prodottiUpserted = await _prodottiService.UpsertProdottoListAsync(prodotti);
             return Ok(prodottiUpserted);
         }
+    }
+
+    [HttpPost("ModificaProdotto")]
+    public async Task<Prodotto> UpdateProdottoAsync(Prodotto prodotto)
+    {
+        return await _prodottiService.UpdateProdottoAsync(prodotto);
+    }
+
+    [HttpDelete("EliminaProdotto")]
+    public async Task EliminaProdottoAsync(Prodotto prodotto)
+    {
+        await _prodottiService.DeleteProdottoAsync(prodotto);
     }
 }
