@@ -63,7 +63,7 @@ public class ProdottiController : ControllerBase
         return await _prodottiService.UpdateProdottoAsync(prodotto);
     }
 
-    [HttpDelete("EliminaProdotto")]
+    [HttpPost("EliminaProdotto")]
     public async Task EliminaProdottoAsync(Prodotto prodotto)
     {
         await _prodottiService.DeleteProdottoAsync(prodotto);

@@ -76,7 +76,7 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         try {
-          const updatedProduct = await this.configService.modificaProdotto(result);
+          const updatedProduct = await this.configService.modificaProdottoAsync(result);
           const index = this.prodotti.findIndex(p => p.prodottoId === updatedProduct.prodottoId);
           if (index !== -1) {
             this.prodotti[index] = updatedProduct;
@@ -89,7 +89,7 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
     });
   }
 
-  openDialogDelete(row: any) {
+  async openDialogDelete(row: any) {
     const dialogRef = this.dialog.open(ModaleEliminaProdottoComponent, {
       data: {
         prodottoId: 0,
@@ -98,8 +98,14 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
         prezzo: row.prezzo,
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) console.log('Prodotto eliminato con successo');
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if(result)
+        try
+        {
+          await this.configService.eliminaProdottoAsync(row);
+        } catch (error) {
+          console.error('Errore durante l eliminazione del prodotto', error);
+        }
     });
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AddOrderRequest } from '../models/requests/addOrdini.request';
 import { Observable, finalize, firstValueFrom } from 'rxjs';
 import { Prodotto } from '../models/prodotto.model';
@@ -121,9 +121,14 @@ export class ConfigService {
   //   }
   // }
 
-  async modificaProdotto(prodotto: Prodotto): Promise<Prodotto> {
+  async modificaProdottoAsync(prodotto: Prodotto): Promise<Prodotto> {
     const configUrl = this.apiAddress + 'prodotti/ModificaProdotto';
     const updatedProduct = await firstValueFrom(this.http.post<Prodotto>(configUrl, prodotto));
     return updatedProduct;
+  }
+
+  async eliminaProdottoAsync(prodotto: Prodotto) {
+    const configUrl = this.apiAddress + 'prodotti/EliminaProdotto';
+    await firstValueFrom(this.http.post<any>(configUrl, prodotto));
   }
 }
