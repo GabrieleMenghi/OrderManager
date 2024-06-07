@@ -85,9 +85,10 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
           if (index !== -1) {
             this.prodotti[index] = updatedProduct;
             this.dataSource.data = [...this.prodotti];
+            this.toastr.success('Modifica completata con successo');
           }
         } catch (error) {
-          console.error('Errore durante la modifica del prodotto', error);
+          this.toastr.error('Modifica non riuscita');
         }
       }
     });
