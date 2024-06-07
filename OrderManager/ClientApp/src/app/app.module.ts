@@ -3,7 +3,7 @@ import {
   BrowserModule,
   provideClientHydration,
 } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,7 @@ import { StoricoOrdiniComponent } from './components/storico-ordini/storico-ordi
 import { ModaleModificaProdottoComponent } from './components/modali/modale-modifica-prodotto/modale-modifica-prodotto.component';
 import { ModaleEliminaProdottoComponent } from './components/modali/modale-elimina-prodotto/modale-elimina-prodotto.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ErrorInterceptor } from './config/interceptor';
 
 @NgModule({
   declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent, OrdiniComponent, StoricoOrdiniComponent, ModaleModificaProdottoComponent, ModaleEliminaProdottoComponent],
@@ -39,7 +40,11 @@ import { ToastrModule } from 'ngx-toastr';
       preventDuplicates: true,
     })
   ],
-  providers: [provideClientHydration(), provideAnimationsAsync()],
+  providers: [
+    provideClientHydration(), 
+    provideAnimationsAsync(), 
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
+  
   bootstrap: [AppComponent],
 })
 export class AppModule {}

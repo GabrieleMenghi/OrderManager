@@ -18,7 +18,6 @@ export class ImportComponent {
 
   constructor(
     public configService: ConfigService,
-    private _snackBar: MatSnackBar
   ) {}
 
   onFileSelected(event: any) {
@@ -46,11 +45,8 @@ export class ImportComponent {
         formData.append('file', this.file);
 
         await this.configService.importProdotti(formData);
-
-        this._snackBar.open('Import completato', 'Chiudi', {duration: 4000});
       }
     } catch (error) {
-      this._snackBar.open('Import in errore: ' + error, 'Chiudi', {duration: 4000});
     }
   }
 }

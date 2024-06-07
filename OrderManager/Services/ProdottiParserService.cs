@@ -76,9 +76,9 @@ public class ProdottiParserService : IProdottiParserService
             }
             return prodotti;
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return prodotti;
+            throw;
         }
     }
 }
