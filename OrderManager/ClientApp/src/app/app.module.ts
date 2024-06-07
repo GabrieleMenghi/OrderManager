@@ -20,6 +20,7 @@ import { OrdiniComponent } from './components/ordini/ordini.component';
 import { StoricoOrdiniComponent } from './components/storico-ordini/storico-ordini.component';
 import { ModaleModificaProdottoComponent } from './components/modali/modale-modifica-prodotto/modale-modifica-prodotto.component';
 import { ModaleEliminaProdottoComponent } from './components/modali/modale-elimina-prodotto/modale-elimina-prodotto.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent, OrdiniComponent, StoricoOrdiniComponent, ModaleModificaProdottoComponent, ModaleEliminaProdottoComponent],
@@ -31,7 +32,12 @@ import { ModaleEliminaProdottoComponent } from './components/modali/modale-elimi
     SidebarComponent,
     FormsModule,
     ReactiveFormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    })
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

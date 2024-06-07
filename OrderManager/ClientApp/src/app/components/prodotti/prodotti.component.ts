@@ -18,6 +18,7 @@ import {
 } from '@angular/material/dialog';
 import { ModaleModificaProdottoComponent } from '../modali/modale-modifica-prodotto/modale-modifica-prodotto.component';
 import { ModaleEliminaProdottoComponent } from '../modali/modale-elimina-prodotto/modale-elimina-prodotto.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-prodotti',
@@ -45,7 +46,10 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
     });
   }
 
-  constructor(private configService: ConfigService, private dialog: MatDialog) {
+  constructor(
+    private configService: ConfigService, 
+    private dialog: MatDialog,
+    private toastr: ToastrService) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.prodotti);
   }
@@ -103,8 +107,9 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
         try
         {
           await this.configService.eliminaProdottoAsync(row);
+          this.toastr.success('Eliminazione completata con successo');
         } catch (error) {
-          console.error('Errore durante l eliminazione del prodotto', error);
+          this.toastr.error('Eliminazione non riuscita');
         }
     });
   }
