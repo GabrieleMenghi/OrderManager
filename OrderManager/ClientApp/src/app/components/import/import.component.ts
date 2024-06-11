@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ConfigService } from '../../config/config.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-import',
@@ -12,7 +13,8 @@ export class ImportComponent {
 
   constructor(
     public configService: ConfigService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {}
 
   onFileSelected(event: any) {
@@ -46,17 +48,18 @@ export class ImportComponent {
   async importProdotti() {
     try {
       if (this.file) {
+        this.spinner.show();
         const formData: FormData = new FormData();
         formData.append('file', this.file);
 
         await this.configService.importProdotti(formData);
 
-        this.toastr.success("Import prodotti compleato con successo");
+        this.toastr.success("Import prodotti completato con successo");
       }
     } catch (error) {
     }
     finally{
-      
+      this.spinner.hide();
     }
   }
 

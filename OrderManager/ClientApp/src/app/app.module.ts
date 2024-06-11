@@ -22,6 +22,8 @@ import { ModaleModificaProdottoComponent } from './components/modali/modale-modi
 import { ModaleEliminaProdottoComponent } from './components/modali/modale-elimina-prodotto/modale-elimina-prodotto.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './config/interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, ProdottiComponent, HomeComponent, ImportComponent, ClientiComponent, OrdiniComponent, StoricoOrdiniComponent, ModaleModificaProdottoComponent, ModaleEliminaProdottoComponent],
@@ -34,11 +36,13 @@ import { ErrorInterceptor } from './config/interceptor';
     FormsModule,
     ReactiveFormsModule,
     MatPaginatorModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-    })
+    }),
+    NgxSpinnerModule.forRoot({ type: 'square-jelly-box' })
   ],
   providers: [
     provideClientHydration(), 
