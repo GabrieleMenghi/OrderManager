@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   Component,
-  Inject,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -11,10 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Prodotto } from '../../models/prodotto.model';
 import { ConfigService } from '../../config/config.service';
 import {
-  MAT_DIALOG_DATA,
   MatDialog,
-  MatDialogContent,
-  MatDialogTitle,
 } from '@angular/material/dialog';
 import { ModaleModificaProdottoComponent } from '../modali/modale-modifica-prodotto/modale-modifica-prodotto.component';
 import { ModaleEliminaProdottoComponent } from '../modali/modale-elimina-prodotto/modale-elimina-prodotto.component';

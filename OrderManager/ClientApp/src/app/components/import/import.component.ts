@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { ConfigService } from '../../config/config.service';
-import {
-  MatSnackBar,
-  MatSnackBarAction,
-  MatSnackBarActions,
-  MatSnackBarLabel,
-  MatSnackBarRef,
-} from '@angular/material/snack-bar';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-import',
@@ -18,6 +12,7 @@ export class ImportComponent {
 
   constructor(
     public configService: ConfigService,
+    private toastr: ToastrService
   ) {}
 
   onFileSelected(event: any) {
@@ -55,8 +50,13 @@ export class ImportComponent {
         formData.append('file', this.file);
 
         await this.configService.importProdotti(formData);
+
+        this.toastr.success("Import prodotti compleato con successo");
       }
     } catch (error) {
+    }
+    finally{
+      
     }
   }
 

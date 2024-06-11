@@ -18,20 +18,8 @@ export class ConfigService {
   }
 
   async importProdotti(formData: FormData) {
-    try {
-      var configUrl =
-        this.apiAddress + 'prodotti/ImportProdottiFromExcelStream';
-      await this.http.post<any>(configUrl, formData).subscribe({
-        next: () => {
-          console.log('Richiesta eseguita');
-        },
-        error: (error) => {
-          throw error;
-        },
-      });
-    } catch (error) {
-      throw error;
-    }
+    const configUrl = this.apiAddress + 'prodotti/ImportProdottiFromExcelStream';
+    await firstValueFrom(this.http.post<any>(configUrl, formData));
   }
 
   // Clienti
@@ -45,22 +33,6 @@ export class ConfigService {
     var configUrl = this.apiAddress + 'ordini';
     return this.http.get(configUrl);
   }
-
-  /*async aggiungiOrdine(request: AddOrderRequest) {
-    try {
-      var configUrl = this.apiAddress + 'ordini/AddOrder';
-      return await this.http.post<any>(configUrl, request).subscribe({
-        next: () => {
-          console.log('Aggiunta effettuata');
-        },
-        error: (error) => {
-          throw error;
-        },
-      });
-    } catch (error) {
-      throw error;
-    }
-  }*/
 
   async aggiungiOrdine(request: AddOrderRequest) {
     try {
@@ -106,20 +78,6 @@ export class ConfigService {
       throw error;
     }
   }
-
-  // async modificaProdotto(prodotto: Prodotto) {
-  //   try {
-  //     var configUrl = this.apiAddress + 'prodotti/ModificaProdotto';
-  //     await this.http.post<any>(configUrl, prodotto).subscribe({
-  //       next: () => {},
-  //       error: (error) => {
-  //         throw error;
-  //       },
-  //     });
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
 
   async modificaProdottoAsync(prodotto: Prodotto): Promise<Prodotto> {
     const configUrl = this.apiAddress + 'prodotti/ModificaProdotto';
