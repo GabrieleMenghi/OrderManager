@@ -24,6 +24,16 @@ export class ImportComponent {
     const selectedFile = event.target.files[0];
     const allowedExtensions = ['.xlsx', '.xlsm'];
 
+    // Cambia la label del file input
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const fileName = input.files[0].name;
+      const fileNameSpan = document.getElementById('file-name');
+      if (fileNameSpan) {
+        fileNameSpan.textContent = fileName;
+      }
+    }
+
     // Verifica se l'estensione del file selezionato è tra quelle consentite
     if (selectedFile) {
       const fileExtension = selectedFile.name.split('.').pop()?.toLowerCase();
@@ -49,4 +59,5 @@ export class ImportComponent {
     } catch (error) {
     }
   }
+
 }

@@ -1,0 +1,35 @@
+.import-contenitore {
+  background-color: rgb(231, 231, 231);
+  box-shadow: 5px 5px 12px #292929;
+}
+
+.import-button {
+  background-color: transparent;
+  border: 1px solid rgb(71, 71, 71);
+  width: 25%;
+}
+
+.import-button:hover {
+  background-color: rgb(210, 210, 210);
+}
+
+.import-title {
+  font-weight: bold;
+}
+
+.file-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.file-label {
+  background-color: #d6d6d6;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#file-name {
+  font-style: italic;
+}

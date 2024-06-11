@@ -1,18 +1,19 @@
-<div class="col-7 border border-dark mt-3">
-    <div class="row text-center">
+<div class="col-12 mt-3 import-contenitore">
+    <div class="row text-center mb-3">
         <div class="col-12">
-            <span>IMPORTA PRODOTTI</span>
+            <span class="import-title">IMPORTA PRODOTTI</span>
         </div>
     </div>
-    <div class="row text-center">
-        <label for="importProdottiFilePicker" class="col-6">Scegli un file dal quale importare i prodotti</label>
-        <div class="col-6">
-            <input id="importProdottiFilePicker" type="file" accept=".xlsx, .xlsm" (change)="onFileSelected($event)" />
+    <div class="row text-center file-input-container">
+        <div class="col-12">
+            <label class="file-label me-4" for="importProdottiFilePicker">Scegli il file</label>
+            <input id="importProdottiFilePicker" type="file" accept=".xlsx, .xlsm" (change)="onFileSelected($event)" style="display: none;" />
+            <span id="file-name">Nessun file selezionato</span>
         </div>
     </div>
-    <div class="row text-center">
-        <div class="col-12">
-            <button (click)="importProdotti()">Importa</button>
+    <div class="row text-center mt-3 px-1">
+        <div class="col-12 my-2">
+            <button class="import-button" mat-stroked-button color="primary">Importa</button>
         </div>
     </div>
 </div>
