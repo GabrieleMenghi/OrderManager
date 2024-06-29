@@ -42,7 +42,7 @@ public class OrdiniController : ControllerBase
         }
     }
 
-    [HttpGet("GetOrdineConRighe")]
+    [HttpGet("GetOrdineConRighe/{ordineId}")]
     public async Task<OrdineBL> GetOrdineConRighe(long ordineId)
     {
         try

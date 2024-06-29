@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ProdottoSelezionatoPerOrdine } from '../../models/prodottoSelezionatoPerOrdine.model';
 import { AddOrderRequest } from '../../models/requests/addOrdini.request';
 import { Ordine, RigaOrdine } from '../../models/ordine.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ordini',
@@ -40,10 +41,15 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
 
   selectedProdottiPerOrdine: Array<ProdottoSelezionatoPerOrdine> = [];
 
+  ordineId?: number;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private route: ActivatedRoute
+  ) {
     this.dataSource = new MatTableDataSource(this.prodotti);
   }
 
@@ -69,6 +75,21 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
       this.prodotti = data as Array<Prodotto>;
       this.dataSource.data = this.prodotti;
     });
+
+    // Ottengo l'id dell'ordine se presente dall'url
+    var ordineIdString = this.route.snapshot.paramMap.get('id');
+    this.ordineId = Number(ordineIdString);
+
+    // Se l'id ordine è valorizzato, popolo il cliente selezionato ed i prodotti selezionati
+    if (this.ordineId > 0) {
+      var ordine = await this.configService.getOrdine(this.ordineId);
+      console.log(ordine);
+      // document.getElementById("fareFatturaFlag").checked = this.fareFattura;
+      this.fareFattura = ordine.fareFattura;
+      this.clientsControl.setValue(this.clienti.filter(x => x.clienteId === ordine.clienteId).map(x => x.nome)[0]);
+    }
+
+    console.log(this.fareFattura);
   }
 
   filterClients(value: string): string[] {
@@ -103,8 +124,13 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
       (x) => x.prodotto.codice
     );
     if (!selectedProdottiCodici.includes(row.codice)) {
-      var prodottoId = this.getProdottoIdByCodice(row.codice)
-      var prodotto = new Prodotto(prodottoId, row.codice, row.descrizione, row.prezzo);
+      var prodottoId = this.getProdottoIdByCodice(row.codice);
+      var prodotto = new Prodotto(
+        prodottoId,
+        row.codice,
+        row.descrizione,
+        row.prezzo
+      );
       var rigaOrdineToAdd =
         ProdottoSelezionatoPerOrdine.ProdottoSelezionatoPerOrdineFactory(
           prodotto,
@@ -120,9 +146,14 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
   }
 
   rimuoviRigaOrdine(selRow: any) {
-    var rigaOrdineToDelete = this.selectedProdottiPerOrdine.find((x) => x.prodotto.codice === selRow.prodotto.codice);
+    var rigaOrdineToDelete = this.selectedProdottiPerOrdine.find(
+      (x) => x.prodotto.codice === selRow.prodotto.codice
+    );
     if (rigaOrdineToDelete) {
-      const index = this.selectedProdottiPerOrdine.indexOf(rigaOrdineToDelete, 0);
+      const index = this.selectedProdottiPerOrdine.indexOf(
+        rigaOrdineToDelete,
+        0
+      );
       if (index > -1) {
         this.selectedProdottiPerOrdine.splice(index, 1);
         this.totaleOrdine = this.selectedProdottiPerOrdine.reduce(
@@ -137,17 +168,31 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
   async creaOrdine() {
     var dateNow = new Date();
     const dateNowString = dateNow.toLocaleString('it-IT');
-    var clienteSelected = this.clienti.filter(x => x.nome === this.clientsControl.value)[0];
-    var righeOrdine = this.selectedProdottiPerOrdine.map(x => RigaOrdine.RigaOrdineFactoryCreate(x.prodotto.prodottoId, x.unitaMisura, x.quantita));
-    var ordine = Ordine.OrdineFactoryCreate(dateNowString, clienteSelected.clienteId, this.fareFattura, righeOrdine, "");
+    var clienteSelected = this.clienti.filter(
+      (x) => x.nome === this.clientsControl.value
+    )[0];
+    var righeOrdine = this.selectedProdottiPerOrdine.map((x) =>
+      RigaOrdine.RigaOrdineFactoryCreate(
+        x.prodotto.prodottoId,
+        x.unitaMisura,
+        x.quantita
+      )
+    );
+    var ordine = Ordine.OrdineFactoryCreate(
+      dateNowString,
+      clienteSelected.clienteId,
+      this.fareFattura,
+      righeOrdine,
+      ''
+    );
     var addOrderRequest: AddOrderRequest = new AddOrderRequest(ordine);
     console.log(this.selectedProdottiPerOrdine);
 
     await this.configService.aggiungiOrdine(addOrderRequest);
   }
 
-  getProdottoIdByCodice(codice: string): number{
-    var prodotto = this.prodotti.filter(x => x.codice === codice)[0];
+  getProdottoIdByCodice(codice: string): number {
+    var prodotto = this.prodotti.filter((x) => x.codice === codice)[0];
     return prodotto.prodottoId;
   }
 }

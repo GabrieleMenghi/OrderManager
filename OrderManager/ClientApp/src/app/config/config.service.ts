@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AddOrderRequest } from '../models/requests/addOrdini.request';
 import { Observable, finalize, firstValueFrom } from 'rxjs';
 import { Prodotto } from '../models/prodotto.model';
+import { Ordine } from '../models/ordine.model';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,11 @@ export class ConfigService {
   async getOrdini() {
     var configUrl = this.apiAddress + 'ordini';
     return this.http.get(configUrl);
+  }
+
+  async getOrdine(ordineId: number) {
+    var configUrl = this.apiAddress + 'ordini/GetOrdineConRighe/' + ordineId;
+    return await firstValueFrom(this.http.get<Ordine>(configUrl));
   }
 
   async aggiungiOrdine(request: AddOrderRequest) {

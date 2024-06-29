@@ -13,7 +13,7 @@ const routes: Routes = [
   {path:'import',component:ImportComponent},
   {path:'clienti',component:ClientiComponent},
   {path:'storico-ordini',component:StoricoOrdiniComponent},
-  {path:'ordini',component:OrdiniComponent},
+  {path:'ordini/:id',component:OrdiniComponent},
 ];
 
 @NgModule({
