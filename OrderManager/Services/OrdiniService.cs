@@ -100,4 +100,22 @@ public class OrdiniService : IOrdiniService
             throw;
         }
     }
+
+    public async Task<OrdineBL> GetOrdineBlConRigheAsync(long ordineId)
+    {
+        try
+        {
+            // Ottengo l'ordine da db
+            var ordineSql = await _ordiniRepo.GetOrdineConRigheAsync(ordineId);
+
+            // lo converto a bl
+            var ordineBl = _conversionSubService.ConvertToOrdineBLWithRigheOrdineBL(ordineSql);
+
+            return ordineBl;
+        }
+        catch(Exception e)
+        {
+            throw;
+        }
+    }
 }

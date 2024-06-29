@@ -27,4 +27,12 @@ public class SqlRepositoryOrdini : IRepositoryOrdini
 
         return ordine;
     }
+
+    public async Task<Ordine> GetOrdineConRigheAsync(long ordineId)
+    {
+        return await _dbContext.Ordini
+            .Where(x => x.OrdineId == ordineId)
+            .Include(x => x.RigheOrdine)
+            .SingleOrDefaultAsync();
+    }
 }

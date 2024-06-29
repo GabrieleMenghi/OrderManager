@@ -6,4 +6,5 @@ public interface IRepositoryOrdini
 {
     Task<Ordine> AddOrder(Ordine ordine);
     Task<List<Ordine>> GetOrders();
+    Task<Ordine> GetOrdineConRigheAsync(long ordineId);
 }
