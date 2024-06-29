@@ -83,8 +83,6 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
     // Se l'id ordine è valorizzato, popolo il cliente selezionato ed i prodotti selezionati
     if (this.ordineId > 0) {
       var ordine = await this.configService.getOrdine(this.ordineId);
-      console.log(ordine);
-      // document.getElementById("fareFatturaFlag").checked = this.fareFattura;
       this.fareFattura = ordine.fareFattura;
       this.clientsControl.setValue(this.clienti.filter(x => x.clienteId === ordine.clienteId).map(x => x.nome)[0]);
     }
