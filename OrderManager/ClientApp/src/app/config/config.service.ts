@@ -15,7 +15,7 @@ export class ConfigService {
   // Prodotti
   async getProdotti() {
     var configUrl = this.apiAddress + 'prodotti';
-    return this.http.get(configUrl);
+    return await firstValueFrom(this.http.get(configUrl));
   }
 
   async importProdotti(formData: FormData) {
@@ -26,16 +26,16 @@ export class ConfigService {
   // Clienti
   async getClienti() {
     var configUrl = this.apiAddress + 'clienti';
-    return this.http.get(configUrl);
+    return await firstValueFrom(this.http.get(configUrl));
   }
 
   // Ordini
   async getOrdini() {
     var configUrl = this.apiAddress + 'ordini';
-    return this.http.get(configUrl);
+    return await firstValueFrom(this.http.get(configUrl));
   }
 
-  async getOrdine(ordineId: number) {
+  async getOrdine(ordineId: number): Promise<Ordine> {
     var configUrl = this.apiAddress + 'ordini/GetOrdineConRighe/' + ordineId;
     return await firstValueFrom(this.http.get<Ordine>(configUrl));
   }

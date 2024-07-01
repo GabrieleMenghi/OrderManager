@@ -19,10 +19,9 @@ export class ClientiComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   async ngOnInit() {
-    (await this.configService.getClienti()).subscribe((data) => {
-      this.clienti = data as Array<Cliente>;
-      this.dataSource.data = this.clienti;
-    });
+    var data = await this.configService.getClienti();
+    this.clienti = data as Array<Cliente>;
+    this.dataSource.data = this.clienti;
   }
 
   constructor(private configService: ConfigService) {

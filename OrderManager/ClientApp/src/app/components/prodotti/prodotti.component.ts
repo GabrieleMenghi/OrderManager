@@ -36,10 +36,9 @@ export class ProdottiComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   async ngOnInit() {
-    (await this.configService.getProdotti()).subscribe((data) => {
-      this.prodotti = data as Array<Prodotto>;
-      this.dataSource.data = this.prodotti;
-    });
+    var data = await this.configService.getProdotti();
+    this.prodotti = data as Array<Prodotto>;
+    this.dataSource.data = this.prodotti;
   }
 
   constructor(

@@ -63,18 +63,16 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
       map((value) => this.filterClients(value || ''))
     );
 
-    (await this.configService.getClienti()).subscribe((data) => {
-      this.clienti = data as Array<Cliente>;
-      // Assegna i nomi dei clienti a options dopo aver ottenuto i dati
-      this.options = this.clienti.map((x) => x.nome);
-      // Emette un evento di valueChanges per forzare l'aggiornamento della lista filtrata
-      this.clientsControl.setValue('');
-    });
+    var data = await this.configService.getClienti();
+    this.clienti = data as Array<Cliente>;
+    // Assegna i nomi dei clienti a options dopo aver ottenuto i dati
+    this.options = this.clienti.map((x) => x.nome);
+    // Emette un evento di valueChanges per forzare l'aggiornamento della lista filtrata
+    this.clientsControl.setValue('');
 
-    (await this.configService.getProdotti()).subscribe((data) => {
-      this.prodotti = data as Array<Prodotto>;
-      this.dataSource.data = this.prodotti;
-    });
+    var data = await this.configService.getProdotti();
+    this.prodotti = data as Array<Prodotto>;
+    this.dataSource.data = this.prodotti;
 
     // Ottengo l'id dell'ordine se presente dall'url
     var ordineIdString = this.route.snapshot.paramMap.get('id');
@@ -82,12 +80,24 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
 
     // Se l'id ordine è valorizzato, popolo il cliente selezionato ed i prodotti selezionati
     if (this.ordineId > 0) {
-      var ordine = await this.configService.getOrdine(this.ordineId);
-      this.fareFattura = ordine.fareFattura;
-      this.clientsControl.setValue(this.clienti.filter(x => x.clienteId === ordine.clienteId).map(x => x.nome)[0]);
+      try {
+        var ordine = await this.configService.getOrdine(this.ordineId);
+        // Fare fattura
+        this.fareFattura = ordine.fareFattura;
+        // Cliente
+        this.clientsControl.setValue(this.clienti.filter((x) => x.clienteId === ordine.clienteId).map((x) => x.nome)[0]
+        );
+        // Righe
+        var prodottiSelezionatiNelVecchioOrdine = ordine.righeOrdine.map((x) =>
+          ProdottoSelezionatoPerOrdine.ProdottoSelezionatoPerOrdineFactory(
+            this.prodotti.filter((y) => y.prodottoId == x.prodottoId)[0],
+            x.unitaDiMisura,
+            x.quantita
+          )
+        );
+        prodottiSelezionatiNelVecchioOrdine.forEach((x) => this.selectedProdottiPerOrdine.push(x));
+      } catch (e) {}
     }
-
-    console.log(this.fareFattura);
   }
 
   filterClients(value: string): string[] {

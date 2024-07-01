@@ -11,30 +11,27 @@ import { Cliente } from '../../models/cliente.model';
   templateUrl: './storico-ordini.component.html',
   styleUrl: './storico-ordini.component.css',
 })
-export class StoricoOrdiniComponent implements OnInit{
+export class StoricoOrdiniComponent implements OnInit {
   ordini: Array<Ordine> = [];
   dataSource: MatTableDataSource<Ordine>;
-  displayedColumns: string[] = ['ordineId', 'data', 'clienteId'];
+  displayedColumns: string[] = ['ordineId', 'data', 'cliente'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   clienti: Array<Cliente> = [];
 
-
   constructor(private configService: ConfigService) {
     this.dataSource = new MatTableDataSource(this.ordini);
   }
 
   async ngOnInit() {
-    (await this.configService.getOrdini()).subscribe((data) => {
-      this.ordini = data as Array<Ordine>;
-      this.dataSource.data = this.ordini;
-    });
+    var data = await this.configService.getOrdini();
+    this.ordini = data as Array<Ordine>;
+    this.dataSource.data = this.ordini;
 
-    (await this.configService.getClienti()).subscribe((data) => {
-      this.clienti = data as Array<Cliente>;
-    });
+    var data = await this.configService.getClienti();
+    this.clienti = data as Array<Cliente>;
   }
 
   ngAfterViewInit() {
@@ -51,8 +48,11 @@ export class StoricoOrdiniComponent implements OnInit{
     }
   }
 
-  getClienteNameById(clienteId: number): string{
-    var cliente = this.clienti.filter(x => x.clienteId === clienteId)[0];
+  getClienteNameById(clienteId: number): string {
+    if (!this.clienti) {
+      return '';
+    }
+    var cliente = this.clienti.filter((x) => x.clienteId === clienteId)[0];
     return cliente.nome;
   }
 }
