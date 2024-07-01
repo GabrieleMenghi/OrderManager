@@ -21,7 +21,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
   // Clienti
   clientsControl = new FormControl('', [Validators.required]);
   clienti: Array<Cliente> = [];
-  options: string[] = this.clienti.map((x) => x.nome);
+  opzioniClienti: string[] = this.clienti.map((x) => x.nome);
   clientsFilteredOptions: Observable<string[]>;
 
   fareFattura: boolean = false;
@@ -35,7 +35,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
     'quantita',
     'aggiungi',
   ];
-  dataSource: MatTableDataSource<Prodotto>;
+  dataSource: MatTableDataSource<Prodotto> = new MatTableDataSource<Prodotto>;
   prodotti: Array<Prodotto> = [];
   unitaDiMisuraList: Array<string> = ['PZ', 'CT'];
 
@@ -43,14 +43,26 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
 
   ordineId?: number;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  dataSourceSelectedProducts: MatTableDataSource<ProdottoSelezionatoPerOrdine> = new MatTableDataSource<ProdottoSelezionatoPerOrdine>;
+  colonneProdottiSelezionati: string[] = [
+    'descrizione',
+    'unitaMisura',
+    'quantita',
+    'rimuovi',
+  ];
+
+  @ViewChild('paginatorProducts') paginator: MatPaginator;
+  @ViewChild('sortProducts') sort: MatSort;
+
+  @ViewChild('paginatorSelectedProducts') paginatorSelectedProducts: MatPaginator;
+  @ViewChild('sortSelectedProducts') sortSelectedProducts: MatSort;
 
   constructor(
     private configService: ConfigService,
     private route: ActivatedRoute
   ) {
     this.dataSource = new MatTableDataSource(this.prodotti);
+    this.dataSourceSelectedProducts = new MatTableDataSource(this.selectedProdottiPerOrdine);
   }
 
   ff() {
@@ -65,14 +77,14 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
 
     var data = await this.configService.getClienti();
     this.clienti = data as Array<Cliente>;
-    // Assegna i nomi dei clienti a options dopo aver ottenuto i dati
-    this.options = this.clienti.map((x) => x.nome);
+    this.opzioniClienti = this.clienti.map((x) => x.nome);
     // Emette un evento di valueChanges per forzare l'aggiornamento della lista filtrata
     this.clientsControl.setValue('');
 
     var data = await this.configService.getProdotti();
     this.prodotti = data as Array<Prodotto>;
     this.dataSource.data = this.prodotti;
+    this.dataSourceSelectedProducts.data = this.selectedProdottiPerOrdine;
 
     // Ottengo l'id dell'ordine se presente dall'url
     var ordineIdString = this.route.snapshot.paramMap.get('id');
@@ -85,8 +97,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
         // Fare fattura
         this.fareFattura = ordine.fareFattura;
         // Cliente
-        this.clientsControl.setValue(this.clienti.filter((x) => x.clienteId === ordine.clienteId).map((x) => x.nome)[0]
-        );
+        this.clientsControl.setValue(this.clienti.filter((x) => x.clienteId === ordine.clienteId).map((x) => x.nome)[0]);
         // Righe
         var prodottiSelezionatiNelVecchioOrdine = ordine.righeOrdine.map((x) =>
           ProdottoSelezionatoPerOrdine.ProdottoSelezionatoPerOrdineFactory(
@@ -96,6 +107,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
           )
         );
         prodottiSelezionatiNelVecchioOrdine.forEach((x) => this.selectedProdottiPerOrdine.push(x));
+        this.dataSourceSelectedProducts.data = this.selectedProdottiPerOrdine;
       } catch (e) {}
     }
   }
@@ -105,9 +117,9 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
 
     if (!filterValue) {
       // Restituisci tutti i clienti quando non c'è testo
-      return this.options;
+      return this.opzioniClienti;
     } else {
-      return this.options.filter((option) =>
+      return this.opzioniClienti.filter((option) =>
         option.toLowerCase().includes(filterValue)
       );
     }
@@ -116,6 +128,9 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.dataSourceSelectedProducts.paginator = this.paginatorSelectedProducts;
+    this.dataSourceSelectedProducts.sort = this.sortSelectedProducts;
   }
 
   applyFilter(event: Event) {
@@ -146,6 +161,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
           row.quantita
         );
       this.selectedProdottiPerOrdine.push(rigaOrdineToAdd);
+      this.dataSourceSelectedProducts.data = this.selectedProdottiPerOrdine;
       this.totaleOrdine = this.selectedProdottiPerOrdine.reduce(
         (sum, current) => sum + current.prodotto.prezzo * current.quantita,
         0
@@ -164,6 +180,7 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
       );
       if (index > -1) {
         this.selectedProdottiPerOrdine.splice(index, 1);
+        this.dataSourceSelectedProducts.data = this.selectedProdottiPerOrdine;
         this.totaleOrdine = this.selectedProdottiPerOrdine.reduce(
           (sum, current) => sum + current.prodotto.prezzo * current.quantita,
           0
@@ -194,7 +211,6 @@ export class OrdiniComponent implements OnInit, AfterViewInit {
       ''
     );
     var addOrderRequest: AddOrderRequest = new AddOrderRequest(ordine);
-    console.log(this.selectedProdottiPerOrdine);
 
     await this.configService.aggiungiOrdine(addOrderRequest);
   }

@@ -18,7 +18,7 @@
 
 <div class="row my-2">
     <div class="col-12">
-        F.F. <input id="fareFatturaFlag" type="checkbox" (click)="ff()" [checked]="this.fareFattura"/>
+        F.F. <input id="fareFatturaFlag" type="checkbox" (click)="ff()" [checked]="this.fareFattura" />
     </div>
 </div>
 
@@ -36,7 +36,12 @@
 
         <div class="row mx-2">
             <div class="col-12 mat-elevation-z5 p-0 m-0">
-                <table mat-table [dataSource]="dataSource" matSort>
+                <div class="row text-center">
+                    <div class="col-12">
+                        <h1 style="font-size: x-large;">Prodotti</h1>
+                    </div>
+                </div>
+                <table mat-table [dataSource]="dataSource" matSort #sortProducts="matSort">
 
                     <!-- Codice prodotto -->
                     <ng-container matColumnDef="codice">
@@ -96,14 +101,15 @@
                     </tr>
                 </table>
 
-                <mat-paginator [pageSizeOptions]="[5]" aria-label="Seleziona pagina dei prodotti"></mat-paginator>
+                <mat-paginator #paginatorProducts [pageSize]="5"
+                    aria-label="Seleziona pagina dei prodotti"></mat-paginator>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Prodotti selezionati -->
-<div class="row my-3">
+<!-- <div class="row my-3">
     <div class="col-12">
         <table>
             <thead></thead>
@@ -119,6 +125,52 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+</div> -->
+<div class="row mx-2 my-5">
+    <div class="col-12 mat-elevation-z5 p-0 m-0">
+        <div class="row text-center">
+            <div class="col-12">
+                <h1 style="font-size: x-large;">Prodotti selezionati</h1>
+            </div>
+        </div>
+        <table mat-table [dataSource]="dataSourceSelectedProducts" #sortSelectedProducts="matSort" matSort>
+
+            <!-- Descrizione -->
+            <ng-container matColumnDef="descrizione">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrizione </th>
+                <td mat-cell *matCellDef="let rigaProdottoSelezionato"> {{rigaProdottoSelezionato.prodotto.descrizione}}
+                </td>
+            </ng-container>
+
+            <!-- UM -->
+            <ng-container matColumnDef="unitaMisura">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Unità di misura </th>
+                <td mat-cell *matCellDef="let rigaProdottoSelezionato"> {{rigaProdottoSelezionato.unitaMisura}} </td>
+            </ng-container>
+
+            <!-- Quantita -->
+            <ng-container matColumnDef="quantita">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantità </th>
+                <td mat-cell *matCellDef="let rigaProdottoSelezionato"> {{rigaProdottoSelezionato.quantita}} </td>
+            </ng-container>
+
+            <!-- Rimuovi -->
+            <ng-container matColumnDef="rimuovi">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                <td mat-cell *matCellDef="let rigaProdottoSelezionato">
+                    <button class="removeRigaOrdine" (click)="rimuoviRigaOrdine(rigaProdottoSelezionato)">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="colonneProdottiSelezionati"></tr>
+            <tr mat-row *matRowDef="let rigaProdottoSelezionato; columns: colonneProdottiSelezionati;"></tr>
+        </table>
+
+        <mat-paginator #paginatorSelectedProducts [pageSize]="5"
+            aria-label="Seleziona pagina dei prodotti"></mat-paginator>
     </div>
 </div>
 
@@ -204,7 +256,8 @@
 <div class="fixed-button-container">
     <div class="row my-2">
         <div class="col-12">
-            <button mat-stroked-button style="color: white;" [disabled]="!clientsControl.valid" (click)="creaOrdine()">Crea ordine</button>
+            <button mat-stroked-button style="color: white;" [disabled]="!clientsControl.valid"
+                (click)="creaOrdine()">Crea ordine</button>
         </div>
     </div>
 </div>
