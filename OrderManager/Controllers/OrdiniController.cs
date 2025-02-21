@@ -3,7 +3,6 @@ using OrderManager.DB;
 using OrderManager.Models;
 using OrderManager.Models.Requests.Api;
 using OrderManager.Services.Int;
-using SelectPdf;
 
 namespace OrderManager.Controllers;
 
