@@ -1,9 +1,0 @@
-{
-  "routes": [
-    "/",
-    "/clienti",
-    "/import",
-    "/prodotti",
-    "/storico-ordini"
-  ]
-}
