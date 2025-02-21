@@ -1,0 +1,7 @@
+{
+  "build": {
+    "nixpacks": {
+      "pkgs": ["dotnet-sdk_8"]
+    }
+  }
+}
