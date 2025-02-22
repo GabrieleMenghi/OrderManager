@@ -1,6 +1,0 @@
-[build]
-builder = "nixpacks"
-[nixpacks]
-plan = "dotnet"
-[nixpacks.variables]
-DOTNET_VERSION = "8.0"
