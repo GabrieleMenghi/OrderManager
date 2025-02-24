@@ -16,8 +16,13 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddDbContext<OrderManagerDBContext>(
-            options => options.UseSqlServer("name=ConnectionStrings:OrderManagerDB"));
+        var connectionString = builder.Configuration.GetConnectionString("OrderManagerDB");
+        builder.Services.AddDbContext<OrderManagerDBContext>(options =>
+        {
+            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        });
+        //builder.Services.AddDbContext<OrderManagerDBContext>(
+        //    options => options.UseSqlServer("name=ConnectionStrings:OrderManagerDB"));
 
         builder.Services
         .AddControllers()
