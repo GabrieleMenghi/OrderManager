@@ -78,7 +78,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
 
-        }
+        } 
 
         app.UseHttpsRedirection();
         app.UseRouting();
