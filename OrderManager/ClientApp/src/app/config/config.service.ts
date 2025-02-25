@@ -9,7 +9,8 @@ import { Ordine } from '../models/ordine.model';
   providedIn: 'root',
 })
 export class ConfigService {
-  apiAddress: string = 'http://localhost:5006/api/';
+  // apiAddress: string = 'http://localhost:5006/api/'; // Development
+  apiAddress: string = 'https://ordermanager-production-0d88.up.railway.app/api/'; // Production
   constructor(private http: HttpClient) {}
 
   // Prodotti
