@@ -1,4 +1,5 @@
 ﻿using OrderManager.DB;
+using OrderManager.Models.Requests.Api;
 using OrderManager.Repo.Int;
 using OrderManager.Services.Int;
 
@@ -16,5 +17,12 @@ public class ClientiService : IClientiService
     public async Task<List<Cliente>> GetClientiAsync()
     {
         return await _clientiRepo.GetClienti();
+    }
+
+    public async Task<Cliente> CreateClienteAsync(CreateClienteApiRequest request)
+    {
+        var clienteToAdd = Cliente.ClienteFactoryCreate(request.CodiceCliente, request.Nome, request.Indirizzo, request.Telefono, request.PartitaIva, request.CodiceFiscale, request.CodiceUnivoco);
+        var clienteAdded = await _clientiRepo.CreateClienteAsync(clienteToAdd);
+        return clienteAdded;
     }
 }

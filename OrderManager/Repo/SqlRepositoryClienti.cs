@@ -29,4 +29,10 @@ public class SqlRepositoryClienti : IRepositoryClienti
     {
         return await _dbContext.Clienti.SingleOrDefaultAsync(x => x.ClienteId == clienteId);
     }
+
+    public async Task<Cliente> CreateClienteAsync(Cliente cliente)
+    {
+        var nuovoCliente = await _dbContext.Clienti.AddAsync(cliente);
+        return nuovoCliente.Entity;
+    }
 }

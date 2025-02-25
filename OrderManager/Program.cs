@@ -70,15 +70,15 @@ public class Program
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            var scope = app.Services.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<OrderManagerDBContext>();
-            dbContext.Database.Migrate();
-            app.UseSwagger();
-            app.UseSwaggerUI();
+        //if (app.Environment.IsDevelopment())
+        //{
+        var scope = app.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<OrderManagerDBContext>();
+        dbContext.Database.Migrate();
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
-        }
+        //}
 
         app.UseHttpsRedirection();
         app.UseRouting();

@@ -24,22 +24,22 @@ public class ProdottiController : ControllerBase
         return Ok(await _prodottiService.GetProdottiAsync());
     }
 
-    [HttpGet("ImportProdottiFromExcel")]
-    public async Task<IActionResult> ImportProdottiFromExcelAsync(ImportProdottiFromExcelApiRequest request)
-    {
-        //string filename = @"C:\Users\Gabriele\Desktop\Prova.xlsx";
-        var fileExists = _prodottiParserService.CheckFileExists(request.FileName);
-        if (fileExists)
-        {
-            var prodotti = _prodottiParserService.GetProdottiFromExcelFile(request.FileName);
-            var prodottiUpserted = await _prodottiService.UpsertProdottoListAsync(prodotti);
-            return Ok(prodottiUpserted);
-        }
-        else
-        {
-            return NotFound("File non esistente");
-        }
-    }
+    //[HttpGet("ImportProdottiFromExcel")]
+    //public async Task<IActionResult> ImportProdottiFromExcelAsync(ImportProdottiFromExcelApiRequest request)
+    //{
+    //    //string filename = @"C:\Users\Gabriele\Desktop\Prova.xlsx";
+    //    var fileExists = _prodottiParserService.CheckFileExists(request.FileName);
+    //    if (fileExists)
+    //    {
+    //        var prodotti = _prodottiParserService.GetProdottiFromExcelFile(request.FileName);
+    //        var prodottiUpserted = await _prodottiService.UpsertProdottoListAsync(prodotti);
+    //        return Ok(prodottiUpserted);
+    //    }
+    //    else
+    //    {
+    //        return NotFound("File non esistente");
+    //    }
+    //}
 
     [HttpPost("ImportProdottiFromExcelStream")]
     public async Task<IActionResult> ImportProdottiFromExcelAsync(IFormFile file)
